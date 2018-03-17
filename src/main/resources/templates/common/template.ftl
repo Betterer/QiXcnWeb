@@ -21,6 +21,7 @@
 
                 <!-- Javascript -->
                 <script src="${base}/js/jquery-1.11.1.min.js"></script>
+                <script src="${base}/js/bootstrap.js"></script>
                 <script src="${base}/js/bootstrap.min.js"></script>
                 <script src="${base}/js/jquery.backstretch.min.js"></script>
                 <script src="${base}/js/retina-1.1.0.min.js"></script>

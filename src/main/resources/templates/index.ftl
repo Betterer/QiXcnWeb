@@ -1,38 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Home</title>
-<!-- for-mobile-apps -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Your Trip Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- //for-mobile-apps -->
-<link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../static/css/style.css" rel="stylesheet" type="text/css" media="all" />
-<!-- js -->
-<script src="../static/js/jquery-1.11.1.min.js"></script>
-<!-- //js -->
-<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-<!-- start-smoth-scrolling -->
-<script type="text/javascript" src="../static/js/move-top.js"></script>
-<script type="text/javascript" src="../static/js/easing.js"></script>
-<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$(".scroll").click(function(event){		
-			event.preventDefault();
-			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+<#import "common/template.ftl" as template>
+<@template.head title="起线科技--首页">
+	<link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="${template.base}/js/move-top.js"></script>
+	<script type="text/javascript" src="${template.base}/js/easing.js"></script>
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); }
+	</script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
 		});
-	});
-</script>
-<!-- start-smoth-scrolling -->
-</head>
-	
-<body>
-<!-- banner -->
+	</script>
+</@template.head>
+
+<@template.body>
+	<!-- banner -->
 	<div class="banner">
 		<div class="container">
 			<div class="banner_top">
@@ -50,12 +35,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<nav class="navbar navbar-default">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				  </button>
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -69,14 +54,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="blog.html">Blog</a></li>
 						<li><a href="#contact" class="scroll">Contact Us</a></li>
 					</ul>
-				</div><!-- /.navbar-collapse -->	
-				
+				</div><!-- /.navbar-collapse -->
+
 			</nav>
 			<div class="logo">
 				<a href="index.ftl">Your Trip<span>Alaska Mountains</span></a>
 			</div>
 			<div class="dummy_text">
-				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, 
+				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
 					adipisci velit, sed quia non numquam eius modi.</p>
 			</div>
 			<div class="social_icons">
@@ -89,8 +74,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-<!-- //banner -->
-<!-- banner-bottom-position -->
+	<!-- //banner -->
+	<!-- banner-bottom-position -->
 	<div class="banner-bottom-position">
 		<div class="col-md-6 banner-bottom-position-grid">
 			<div class="banner-bottom-position-grid-left">
@@ -102,14 +87,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<div class="col-md-6 banner-bottom-position-gridr">
 			<h3>01.</h3>
-			<p>To take a trivial example, which of us ever undertakes laborious physical 
-				exercise, except to obtain some advantage from it? But who has any right to 
+			<p>To take a trivial example, which of us ever undertakes laborious physical
+				exercise, except to obtain some advantage from it? But who has any right to
 				find fault with a man who chooses to enjoy a pleasure.</p>
 		</div>
 		<div class="clearfix"> </div>
 	</div>
-<!-- //banner-bottom-position -->
-<!-- banner-bottom -->
+	<!-- //banner-bottom-position -->
+	<!-- banner-bottom -->
 	<div class="banner-bottom">
 		<div class="container">
 			<div class="banner-bottom-grids">
@@ -121,21 +106,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li><a href="#" class="facebook"></a></li>
 							<li><a href="#" class="g"></a></li>
 						</ul>
-						<p>Voluptates repudiandae sint et 
+						<p>Voluptates repudiandae sint et
 							molestiae non recusandae.</p>
 					</div>
 					<div class="banner-bottom-grid1">
 						<h3>Mountains In Alaska</h3>
-						<p>Temporibus autem quibusdam et aut officiis debitis aut rerum 
-							necessitatibus saepe eveniet ut et voluptates repudiandae sint et 
+						<p>Temporibus autem quibusdam et aut officiis debitis aut rerum
+							necessitatibus saepe eveniet ut et voluptates repudiandae sint et
 							molestiae non recusandae.</p>
 					</div>
 				</div>
 				<div class="col-md-4 banner-bottom-grid">
 					<div class="banner-bottom-grid1 banner-bottom-grid1-sub">
 						<h3>Salmon Fish In Alaska</h3>
-						<p>Temporibus autem quibusdam et aut officiis debitis aut rerum 
-							necessitatibus saepe eveniet ut et voluptates repudiandae sint et 
+						<p>Temporibus autem quibusdam et aut officiis debitis aut rerum
+							necessitatibus saepe eveniet ut et voluptates repudiandae sint et
 							molestiae non recusandae.</p>
 					</div>
 					<img src="images/2.jpg" alt=" " class="img-responsive" />
@@ -145,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li><a href="#" class="facebook"></a></li>
 							<li><a href="#" class="g"></a></li>
 						</ul>
-						<p>Voluptates repudiandae sint et 
+						<p>Voluptates repudiandae sint et
 							molestiae non recusandae.</p>
 					</div>
 				</div>
@@ -159,7 +144,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="banner-bottom-grid-box banner-bottom-grid-boxs">
 						<div class="banner-bottom-grid-box1">
 							<h2>dolorem eum fugiat quo</h2>
-							<p>Neque porro quisquam est, qui dolorem ipsum quia qui dolorem eum 
+							<p>Neque porro quisquam est, qui dolorem ipsum quia qui dolorem eum
 								fugiat quo voluptas nulla pariatu.</p>
 						</div>
 					</div>
@@ -174,15 +159,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-<!-- //banner-bottom -->
-<!-- banner-bottom1 -->
+	<!-- //banner-bottom -->
+	<!-- banner-bottom1 -->
 	<div class="banner-bottom1">
-		<div class="container">	
+		<div class="container">
 			<div class="banner-bottom1-grids">
 				<div class="col-md-8 banner-bottom1-grid-left">
 					<h3>vel illum qui dolorem eum fugiat quo voluptas nulla</h3>
-					<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit 
-						esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
+					<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit
+						esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat
 						quo voluptas nulla pariatur</p>
 				</div>
 				<div class="col-md-4 banner-bottom1-grid-right">
@@ -194,13 +179,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-<!-- //banner-bottom1 -->
-<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >企业网站模板</a></div>
-<!-- slider -->
+	<!-- //banner-bottom1 -->
+	<!-- slider -->
 	<div class="slider">
 		<div class="container">
 			<div class="sliderfig">
-				<ul id="flexiselDemo1">			
+				<ul id="flexiselDemo1">
 					<li>
 						<div class="sliderfig-grids">
 							<div class="sliderfig-grid">
@@ -229,45 +213,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</li>
-					</ul>
-					<script type="text/javascript">
-									$(window).load(function() {
-										$("#flexiselDemo1").flexisel({
-											visibleItems: 4,
-											animationSpeed: 1000,
-											autoPlay: true,
-											autoPlaySpeed: 3000,    		
-											pauseOnHover: true,
-											enableResponsiveBreakpoints: true,
-											responsiveBreakpoints: { 
-												portrait: { 
-													changePoint:480,
-													visibleItems: 1
-												}, 
-												landscape: { 
-													changePoint:640,
-													visibleItems:3
-												},
-												tablet: { 
-													changePoint:768,
-													visibleItems: 3
-												}
-											}
-										});
-										
-									});
-							</script>
-							<script type="text/javascript" src="../static/js/jquery.flexisel.js"></script>
+				</ul>
+				<script type="text/javascript">
+					$(window).load(function() {
+						$("#flexiselDemo1").flexisel({
+							visibleItems: 4,
+							animationSpeed: 1000,
+							autoPlay: true,
+							autoPlaySpeed: 3000,
+							pauseOnHover: true,
+							enableResponsiveBreakpoints: true,
+							responsiveBreakpoints: {
+								portrait: {
+									changePoint:480,
+									visibleItems: 1
+								},
+								landscape: {
+									changePoint:640,
+									visibleItems:3
+								},
+								tablet: {
+									changePoint:768,
+									visibleItems: 3
+								}
+							}
+						});
+
+					});
+				</script>
+				<script type="text/javascript" src="../static/js/jquery.flexisel.js"></script>
 			</div>
 		</div>
 	</div>
-<!-- //slider -->
-<!-- banner-bottom-position -->
+	<!-- //slider -->
+	<!-- banner-bottom-position -->
 	<div class="banner-bottom-position">
 		<div class="col-md-7 banner-bottom-position-gridr right">
 			<h3>02.</h3>
-			<p>To take a trivial example, which of us ever undertakes laborious physical 
-				exercise, except to obtain some advantage from it? But who has any right to 
+			<p>To take a trivial example, which of us ever undertakes laborious physical
+				exercise, except to obtain some advantage from it? But who has any right to
 				find fault with a man who chooses to enjoy a pleasure.</p>
 		</div>
 		<div class="col-md-5 banner-bottom-position-grid">
@@ -280,8 +264,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<div class="clearfix"> </div>
 	</div>
-<!-- //banner-bottom-position -->
-<!-- contact -->
+	<!-- //banner-bottom-position -->
+	<!-- contact -->
 	<div class="contact" id="contact">
 		<div class="container">
 			<h3>Contact Us</h3>
@@ -307,26 +291,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-<!-- //contact -->
-<!-- here stars scrolling icon -->
+	<!-- //contact -->
+	<!-- here stars scrolling icon -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/*
-				var defaults = {
+
+			var defaults = {
 				containerID: 'toTop', // fading element id
 				containerHoverID: 'toTopHover', // fading element hover id
 				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
-								
+				easingType: 'linear'
+			};
+
+
 			$().UItoTop({ easingType: 'easeOutQuart' });
-								
-			});
+
+		});
 	</script>
-<!-- //here ends scrolling icon -->
-<!-- for bootstrap working -->
-	<script src="../static/js/bootstrap.js"></script>
-<!-- //for bootstrap working -->
-</body>
-</html>
+	<!-- //here ends scrolling icon -->
+</@template.body>
