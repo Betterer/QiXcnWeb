@@ -1,8 +1,8 @@
 <#import "common/template.ftl" as template>
 <@template.head title="起线科技--首页">
 	<link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
-	<script type="text/javascript" src="${template.base}/js/move-top.js"></script>
-	<script type="text/javascript" src="${template.base}/js/easing.js"></script>
+	<script type="text/javascript" src="${template.base}/js/common/move-top.js"></script>
+	<script type="text/javascript" src="${template.base}/js/common/easing.js"></script>
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); }
 	</script>

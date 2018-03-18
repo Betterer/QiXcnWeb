@@ -15,7 +15,6 @@ public class User implements Serializable {
     private static final long serialVersionUID = 5920392452608356306L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -47,7 +46,7 @@ public class User implements Serializable {
     @JoinColumn(name = "school_id")
     private School school;              //关联学校(是哪个培训机构的负责人)
 
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Comment> commentList;      //关联评论
 
     public School getSchool() {
@@ -58,6 +57,7 @@ public class User implements Serializable {
         this.school = school;
     }
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -136,5 +136,22 @@ public class User implements Serializable {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", image='" + image + '\'' +
+                ", type=" + type +
+                ", realName='" + realName + '\'' +
+                ", identity='" + identity + '\'' +
+                ", school=" + school +
+                ", commentList=" + commentList +
+                '}';
     }
 }

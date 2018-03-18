@@ -18,7 +18,13 @@ public interface UserDao  extends CrudRepository<User, Long> {
 
     //根据用户名查询用户
     User findUserByName(String name);
+
     //根据用户名和密码查询用户
     User findUserByNameAndAndPassword(String name,String password);
 
+    //根据电话号码查询用户
+    User findUserByPhone(String phone);
+
+    //根据点在邮箱查询用户
+    User findUserByEmail(String email);
 }

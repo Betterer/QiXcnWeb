@@ -36,26 +36,27 @@
 									</div>
 								</div>
 								<div class="form-bottom">
-									<form role="form" action="" method="post" class="registration-form">
+									<form role="form" action="${template.base}/user_register" method="post" class="registration-form" id="register_form">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<div class="form-group">
 											<label class="sr-only" for="user_account">用户账号</label>
-											<input type="text" name="account" placeholder="用户账号" class="form-control" id="user_account">
+											<input type="text" name="name" placeholder="用户账号" class="form-control" id="user_name">
 										</div>
 										<div class="form-group">
 											<label class="sr-only" for="user_password">用户密码</label>
-											<input type="text" name="password" placeholder="用户密码" class="form-control" id="user_password">
+											<input type="password" name="password" placeholder="用户密码" class="form-control" id="user_password">
 										</div>
 										<div class="form-group">
 											<label class="sr-only" for="user_password">确认密码</label>
-											<input type="text" name="password" placeholder="确认密码" class="form-control" id="confirm_password">
+											<input type="password" name="confirm_password" placeholder="确认密码" class="form-control" id="confirm_password">
 										</div>
 										<div class="form-group">
 											<label class="sr-only" for="user_password">电话号码</label>
-											<input type="text" name="password" placeholder="电话号码" class="form-control" id="user_phone">
+											<input type="text" name="phone" placeholder="电话号码" class="form-control" id="user_phone">
 										</div>
 										<div class="form-group">
 											<label class="sr-only" for="user_password">电子邮箱</label>
-											<input type="text" name="password" placeholder="电子邮箱" class="form-control" id="user_email">
+											<input type="text" name="email" placeholder="电子邮箱" class="form-control" id="user_email">
 										</div>
 										<div class="form-group">
 											<select name="gender">
@@ -76,5 +77,6 @@
             </div>
             
         </div>
-
+		<!-- 注册表单前端验证js -->
+		<script src="${template.base}/js/index/register_validate.js"></script>
 </@template.body>

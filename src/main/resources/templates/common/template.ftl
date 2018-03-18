@@ -20,12 +20,13 @@
                 <link rel="stylesheet" href="${base}/css/login.css">
 
                 <!-- Javascript -->
-                <script src="${base}/js/jquery-1.11.1.min.js"></script>
-                <script src="${base}/js/bootstrap.js"></script>
-                <script src="${base}/js/bootstrap.min.js"></script>
-                <script src="${base}/js/jquery.backstretch.min.js"></script>
-                <script src="${base}/js/retina-1.1.0.min.js"></script>
-                <script src="${base}/js/login.js"></script>
+                <script src="${base}/js/common/jquery-1.11.1.min.js"></script>
+                <script src="${base}/js/common/bootstrap.js"></script>
+                <script src="${base}/js/common/bootstrap.min.js"></script>
+                <script src="${base}/js/common/jquery.backstretch.min.js"></script>
+                <script src="${base}/js/common/retina-1.1.0.min.js"></script>
+                <script src="${base}/js/index/login.js"></script>
+                <script src="${base}/js/common/jquery.validate.js"></script>
                 <#nested>
             </head>
         </#macro>
