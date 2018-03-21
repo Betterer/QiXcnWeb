@@ -45,6 +45,7 @@ public class IndexController {
     public String index(){
         //从redis缓存中获取用户信息
         User user = (User) redisTemplate.opsForValue().get("user");
+        System.out.println(user);
         return "index";
     }
 

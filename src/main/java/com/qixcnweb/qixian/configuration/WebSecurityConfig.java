@@ -4,6 +4,7 @@ import com.qixcnweb.qixian.handler.LoginSuccessHandler;
 import com.qixcnweb.qixian.service.CustomUserDetailsService;
 import com.qixcnweb.qixian.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +16,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
 /**
  * Spring Security配置类
@@ -42,13 +45,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(new String[]{"/js/**","/css/**","/img/**","/images/**","/fonts/**","/**/favicon.ico"});
     }
 
+
+    @Autowired
+    @Qualifier("rememberMeDataSource")
+    private DataSource dataSource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         //***************************************  设置登录/登出和操作成功之后的跳转页面 ****************************************//
         http.authorizeRequests()
                 //其他地址的访问均需验证权限
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 //指定登录页是"/login"
@@ -60,7 +68,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login")//退出登录后的默认url是"/home"
-                .permitAll();
+                .permitAll()
+                .invalidateHttpSession(true)
+                .and()
+                .rememberMe()//登录后记住用户，下次自动登录,数据库中必须存在名为persistent_logins的表
+                .tokenValiditySeconds(1209600)
+                .tokenRepository(tokenRepository());
 
         //***************************************  CSRF 安全令牌(拦截所有POST请求) ****************************************//
         http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository()).requireCsrfProtectionMatcher(new RequestMatcher() {
@@ -86,6 +99,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                      return encodedPassword.equals(MD5Utils.encode((String)rawPassword));
                  }
              });
+        //记住我功能使用
+        auth.eraseCredentials(false);
+    }
+
+    /**
+     * 记住我功能注入token
+     * @return
+     */
+    @Bean
+    public JdbcTokenRepositoryImpl tokenRepository(){
+        JdbcTokenRepositoryImpl j=new JdbcTokenRepositoryImpl();
+        j.setDataSource(dataSource);
+        return j;
+    }
+
+
+    @Bean
+    public Md5PasswordEncoder passwordEncoder() {
+        return new Md5PasswordEncoder();
     }
 
     /**
@@ -116,4 +148,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public ClassPathTldsLoader classPathTldsLoader(){
         return new ClassPathTldsLoader();
     }
+
 }

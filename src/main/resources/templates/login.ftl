@@ -50,7 +50,7 @@
 			                        	<input type="password" name="password" placeholder="用户密码" class="form-last-name form-control" id="user_password">
 			                        </div>
 									<div class="form-group">
-										<input type="checkbox" name="remember_me"/> 记住我
+										<input type="checkbox" name="remember-me"/> 记住我
 										<#if Session.SPRING_SECURITY_LAST_EXCEPTION?? && Session.SPRING_SECURITY_LAST_EXCEPTION.message?has_content>
 											<span style="margin-left: 30px;">
 												用户名或者密码不正确  ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
