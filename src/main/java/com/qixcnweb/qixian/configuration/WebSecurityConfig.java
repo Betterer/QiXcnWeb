@@ -2,6 +2,7 @@ package com.qixcnweb.qixian.configuration;
 
 import com.qixcnweb.qixian.handler.LoginSuccessHandler;
 import com.qixcnweb.qixian.service.CustomUserDetailsService;
+import com.qixcnweb.qixian.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -51,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 //指定登录页是"/login"
                 .loginPage("/login")
+                .failureUrl("/login?error")
                 .defaultSuccessUrl("/index")//登录成功后默认跳转到"/index"
                 .successHandler(loginSuccessHandler())
                 .permitAll()
@@ -70,18 +73,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService());
-             //.passwordEncoder(passwordEncoder());
-    }
+        auth.userDetailsService(customUserDetailsService())
+             .passwordEncoder( new PasswordEncoder(){
 
-    /**
-     * 设置用户密码的加密方式为MD5加密
-     * @return
-     */
-    @Bean
-    public Md5PasswordEncoder passwordEncoder() {
-        return new Md5PasswordEncoder();
+                 @Override
+                 public String encode(CharSequence rawPassword) {
+                     return MD5Utils.encode((String)rawPassword);
+                 }
 
+                 @Override
+                 public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                     return encodedPassword.equals(MD5Utils.encode((String)rawPassword));
+                 }
+             });
     }
 
     /**

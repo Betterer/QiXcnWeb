@@ -40,16 +40,22 @@
                             </div>
                             <div class="form-bottom">
 			                    <form role="form" action="" method="post" class="registration-form">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="user_account">用户账号</label>
-			                        	<input type="text" name="account" placeholder="用户账号" class="form-first-name form-control" id="user_account">
+			                        	<input type="text" name="username" placeholder="用户账号/电话号码/电子邮箱" class="form-first-name form-control" id="user_account">
 			                        </div>
 			                        <div class="form-group">
 			                        	<label class="sr-only" for="user_password">用户密码</label>
-			                        	<input type="text" name="password" placeholder="用户密码" class="form-last-name form-control" id="user_password">
+			                        	<input type="password" name="password" placeholder="用户密码" class="form-last-name form-control" id="user_password">
 			                        </div>
 									<div class="form-group">
 										<input type="checkbox" name="remember_me"/> 记住我
+										<#if Session.SPRING_SECURITY_LAST_EXCEPTION?? && Session.SPRING_SECURITY_LAST_EXCEPTION.message?has_content>
+											<span style="margin-left: 30px;">
+												用户名或者密码不正确  ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+											</span>
+										</#if>
 									</div>
 			                        <button type="submit" class="btn">点击登录!</button>
 									<span style="margin-left: 15px; font-size: 14px;">没有账号?<a href="${template.base}/register">点击这里</a>,进行注册.</span>

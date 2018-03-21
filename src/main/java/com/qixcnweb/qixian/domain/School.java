@@ -20,7 +20,7 @@ public class School implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne()
     @JoinColumn(name = "user_id")
     private User user;                  //机构负责人
 

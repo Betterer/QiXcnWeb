@@ -59,6 +59,7 @@ $(document).ready(function(){
                 }
             },
             email:{
+                required:true,
                 email:true,
                 remote:{
                     url: "/user/findUserByEmail",        //后台处理程序
@@ -95,6 +96,7 @@ $(document).ready(function(){
                 phone:"电话号码不正确"
             },
             email:{
+                required:"请输入电子邮箱",
                 email:"电子邮箱格式不正确",
                 remote:"该邮箱已经注册"
             },

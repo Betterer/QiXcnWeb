@@ -6,6 +6,6 @@ package com.qixcnweb.qixian.constant;
 public class Constant {
 
     //用户状态
-    public static final Integer STAFF_STATUS_NORMAL = 1;
-    public static final Integer STAFF_STATUS_DELETE = 0;
+    public static final Integer USER_STATUS_NORMAL = 1;
+    public static final Integer USER_STATUS_DELETE = 0;
 }

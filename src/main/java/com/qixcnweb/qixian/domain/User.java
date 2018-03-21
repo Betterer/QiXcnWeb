@@ -3,7 +3,9 @@ package com.qixcnweb.qixian.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**用户类
  * Created by dingxiaochi on 2018/3/16.
@@ -42,11 +44,17 @@ public class User implements Serializable {
     @Column(name = "identity")
     private String identity;
 
+    @Column(name = "status")
+    private Integer status;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
     private School school;              //关联学校(是哪个培训机构的负责人)
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @ManyToMany(mappedBy="userList", fetch = FetchType.EAGER)
+    private Set<Role> roleList = new HashSet<Role>();           //用户角色
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Comment> commentList;      //关联评论
 
     public School getSchool() {
@@ -128,6 +136,22 @@ public class User implements Serializable {
 
     public void setIdentity(String identity) {
         this.identity = identity;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Set<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(Set<Role> roleList) {
+        this.roleList = roleList;
     }
 
     public List<Comment> getCommentList() {

@@ -1,7 +1,9 @@
 package com.qixcnweb.qixian.service;
 
 import com.qixcnweb.qixian.dao.UserDao;
+import com.qixcnweb.qixian.domain.Role;
 import com.qixcnweb.qixian.domain.User;
+import com.qixcnweb.qixian.utils.CommonUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,16 +24,25 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userDao.findUserByName(name);
+        User user = null;
+        if(CommonUtils.isPhone(name)){     //如果输入账号是电话号码格式
+            user = userDao.findUserByPhone(name);
+        }else if(CommonUtils.isEmail(name)){   //如果输入账号是电子邮箱格式
+            user = userDao.findUserByEmail(name);
+        }else{          //如果是普通账号
+            user = userDao.findUserByName(name);
+        }
+
+        //如果用户不存在
         if (user == null) {
-            throw new UsernameNotFoundException("Account " + name + " not found");
+            throw new UsernameNotFoundException("user is not exist!");
         }
 
         //储存用户角色名称
         Collection<SimpleGrantedAuthority> authorityList = new ArrayList<SimpleGrantedAuthority>();
-//        for(Role role : staff.getRoleList()){
-//            authorityList.add(new SimpleGrantedAuthority(role.getName()));
-//        }
+        for(Role role : user.getRoleList()){
+            authorityList.add(new SimpleGrantedAuthority(role.getName()));
+        }
 
         //返回包括权限角色的User给security
         org.springframework.security.core.userdetails.User auth_user = new
