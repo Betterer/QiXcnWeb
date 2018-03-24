@@ -1,5 +1,9 @@
 <#import "common/template.ftl" as template>
 <@template.head title="起线科技--登录">
+	<link rel="stylesheet" href="${template.base}/css/login.css">
+	<script src="${template.base}/js/common/jquery.backstretch.min.js"></script>
+	<script src="${template.base}/js/common/retina-1.1.0.min.js"></script>
+	<script src="${template.base}/js/index/login.js"></script>
 </@template.head>
 <@template.body>
 
@@ -26,7 +30,7 @@
 
                     <div class="row">
                     	<div class="col-sm-6 phone">
-                    		<img src="../static/images/iphone.png" alt="">
+                    		<img src="${template.base}/images/iphone.png" alt="">
                     	</div>
                         <div class="col-sm-5 form-box">
                         	<div class="form-top">
@@ -39,7 +43,7 @@
                         		</div>
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" action="" method="post" class="registration-form">
+			                    <form role="form" action="/login" method="post" class="registration-form">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="user_account">用户账号</label>

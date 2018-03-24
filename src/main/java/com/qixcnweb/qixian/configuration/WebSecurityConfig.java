@@ -1,6 +1,7 @@
 package com.qixcnweb.qixian.configuration;
 
 import com.qixcnweb.qixian.handler.LoginSuccessHandler;
+import com.qixcnweb.qixian.handler.LogoutSuccessHandler;
 import com.qixcnweb.qixian.service.CustomUserDetailsService;
 import com.qixcnweb.qixian.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //***************************************  设置登录/登出和操作成功之后的跳转页面 ****************************************//
         http.authorizeRequests()
                 //其他地址的访问均需验证权限
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+                .antMatchers("/user/info").authenticated()
                 .and()
                 .formLogin()
                 //指定登录页是"/login"
@@ -67,7 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login")//退出登录后的默认url是"/home"
+                .logoutSuccessUrl("/index")//退出登录后的默认url是"/home"
+                .logoutSuccessHandler(logoutSuccessHandler())
                 .permitAll()
                 .invalidateHttpSession(true)
                 .and()
@@ -137,6 +140,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public LoginSuccessHandler loginSuccessHandler(){
         return new LoginSuccessHandler();
+    }
+
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler(){
+        return new LogoutSuccessHandler();
     }
 
 

@@ -17,16 +17,13 @@
                 <link rel="stylesheet" href="${base}/css/bootstrap.min.css">
                 <link rel="stylesheet" href="${base}/css/font-awesome.min.css">
                 <link rel="stylesheet" href="${base}/css/form-elements.css">
-                <link rel="stylesheet" href="${base}/css/login.css">
+
 
                 <!-- Javascript -->
                 <script src="${base}/js/common/jquery-1.11.1.min.js"></script>
-                <script src="${base}/js/common/bootstrap.js"></script>
                 <script src="${base}/js/common/bootstrap.min.js"></script>
-                <script src="${base}/js/common/jquery.backstretch.min.js"></script>
-                <script src="${base}/js/common/retina-1.1.0.min.js"></script>
-                <script src="${base}/js/index/login.js"></script>
                 <script src="${base}/js/common/jquery.validate.js"></script>
+                <script src="${base}/js/common/menuAndNavbar.js"></script>
                 <#nested>
             </head>
         </#macro>
@@ -39,5 +36,79 @@
             </html>
         </#macro>
 
+        <!-- 用户头像 -->
+        <#macro loginUser userId userName='游客' messageCount=12>
+            <div class="banner_top">
+                <div class="banner_top_left">
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <img src="images/1.png"/>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">系统消息<span class="badge">${messageCount}</span></a></li>
+                            <li><a href="#">个人中心</a></li>
+                            <li><a href="#">用户设置</a></li>
+                            <li><a href="#">机构入驻</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="javascript:void(0);" id="logout">登出</a>
+                                <form id="logout_form" action="/logout" method="post" style="display: none;">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                </form>
+                            </li>
+                        </ul>
+                        <span style="color: white;">欢迎登录,${userName}.</span>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </#macro>
+
+        <!-- 用户头像 未登录-->
+        <#macro unLoginUser>
+            <div class="banner_top">
+                <div class="banner_top_left">
+                    <p>你好游客, <a href="${base}/login">登录</a>或者<a href="${base}/register">注册</a></p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </#macro>
+
+
+        <!--菜单栏 首页-->
+        <#macro menu>
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav cl-effect-14">
+                        <li><a href="index.html" class="active">首页</a></li>
+                        <li><a href="about.html">机构列表(学校)</a></li>
+                        <li><a href="features.html">机构列表(地图)</a></li>
+                        <li><a href="portfolio.html">关于我们</a></li>
+                        <li><a href="codes.html">联系我们</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+        </#macro>
+
+        <#macro logo>
+            <div class="logo">
+                <a href="index.html">Qi Xian<span>为孩子画出更好的起跑线</span></a>
+            </div>
+            <div class="dummy_text">
+                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                    adipisci velit, sed quia non numquam eius modi.</p>
+            </div>
+        </#macro>
 
 </#compress>

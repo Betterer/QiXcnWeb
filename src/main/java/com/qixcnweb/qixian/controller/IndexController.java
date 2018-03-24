@@ -1,21 +1,23 @@
 package com.qixcnweb.qixian.controller;
 
+import ch.qos.logback.core.joran.util.StringToObjectConverter;
 import com.qixcnweb.qixian.domain.User;
+import com.qixcnweb.qixian.remote.TestFeignClient;
 import com.qixcnweb.qixian.service.UserService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dingxiaochi on 2018/3/17.
@@ -28,23 +30,21 @@ public class IndexController {
     @Resource
     private UserService userService;
 
-    /**
-     * 跳转到index页面
-     * @return
-     */
-    @GetMapping("/")
-    public String index1(){
-        return "redirect:/index";
-    }
+
+
+    @Resource
+    private TestFeignClient testFeignClient;        //测试eureka远程调用
 
     /**
      * 跳转到index页面
      * @return
      */
     @GetMapping("/index")
-    public String index(){
+    public String index(HttpServletRequest request, Map<String,Object> resultMap){
+        User user = (User) request.getSession().getAttribute("user");
         //从redis缓存中获取用户信息
-        User user = (User) redisTemplate.opsForValue().get("user");
+        //User user = (User) redisTemplate.opsForValue().get("user");
+        resultMap.put("currentUser",user);
         System.out.println(user);
         return "index";
     }
@@ -87,4 +87,27 @@ public class IndexController {
         userService.userRegister(user);
         return "redirect:/index";
     }
+
+
+    /**
+     * 测试eureka远程调用,发送邮件
+     * @return
+     */
+    @GetMapping("/sendEmail")
+    @ResponseBody
+    public String sendEmail(){
+       return testFeignClient.sendEmail();
+    }
+
+    /**
+     * 测试eureka远程调用,发送邮件
+     * @return
+     */
+    @GetMapping("/test")
+    @ResponseBody
+    public String testEmail(){
+        return testFeignClient.testEmail();
+    }
+
+
 }

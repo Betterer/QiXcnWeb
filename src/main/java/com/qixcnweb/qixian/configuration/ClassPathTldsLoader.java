@@ -1,7 +1,6 @@
 package com.qixcnweb.qixian.configuration;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.boot.autoconfigure.security.SpringBootWebSecurityConfiguration;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.annotation.PostConstruct;

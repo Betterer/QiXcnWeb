@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 /**
  * Spring security remember-me 功能使用DataSource配置
+ * 需要配置数据源,且数据库中必须有"persistent_logins"表
  * Created by dingxiaochi on 2018/3/21.
  */
 @Configuration

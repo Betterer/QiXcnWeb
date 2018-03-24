@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -32,6 +33,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         User user = userDao.findUserByName(name);
         //将用户信息存在redis缓存中,方便使用
         redisTemplate.opsForValue().set("user",user);
+        //session中也存入User信息
+        HttpSession session = httpServletRequest.getSession();
+        session.setAttribute("user",user);
 
         super.onAuthenticationSuccess(httpServletRequest, httpServletResponse, authentication);
 

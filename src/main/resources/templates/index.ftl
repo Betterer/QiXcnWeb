@@ -1,8 +1,8 @@
 <#import "common/template.ftl" as template>
 <@template.head title="起线科技--首页">
 	<link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
-	<script type="text/javascript" src="${template.base}/js/common/move-top.js"></script>
-	<script type="text/javascript" src="${template.base}/js/common/easing.js"></script>
+	<script type="text/javascript" src="${template.base}/js/index/move-top.js"></script>
+	<script type="text/javascript" src="${template.base}/js/index/easing.js"></script>
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); }
 	</script>
@@ -20,58 +20,13 @@
 	<!-- banner -->
 	<div class="banner">
 		<div class="container">
-			<div class="banner_top">
-				<div class="banner_top_left">
-					<p>I am travelling to <span>Alaska Mountains.</span></p>
-				</div>
-				<div class="banner_top_right">
-					<form>
-						<input type="text" value="Search Here..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email Address';}" required="">
-						<i class="glyphicon glyphicon-search" aria-hidden="true"></i>
-					</form>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-			<nav class="navbar navbar-default">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-				</div>
-
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav cl-effect-14">
-						<li><a href="index.ftl" class="active">Home</a></li>
-						<li><a href="about.html">About Us</a></li>
-						<li><a href="features.html">Features</a></li>
-						<li><a href="portfolio.html">Portfolio</a></li>
-						<li><a href="codes.html">Pages</a></li>
-						<li><a href="blog.html">Blog</a></li>
-						<li><a href="#contact" class="scroll">Contact Us</a></li>
-					</ul>
-				</div><!-- /.navbar-collapse -->
-
-			</nav>
-			<div class="logo">
-				<a href="index.ftl">Your Trip<span>Alaska Mountains</span></a>
-			</div>
-			<div class="dummy_text">
-				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-					adipisci velit, sed quia non numquam eius modi.</p>
-			</div>
-			<div class="social_icons">
-				<ul>
-					<li><a href="#" class="p"></a></li>
-					<li><a href="#" class="facebook"></a></li>
-					<li><a href="#" class="g"></a></li>
-					<li><a href="#" class="instagram"></a></li>
-				</ul>
-			</div>
+			<#if currentUser??>
+				<@template.loginUser userId="${currentUser.id}" userName="${currentUser.name}" />
+			<#else>
+				<@template.unLoginUser/>
+			</#if>
+			<@template.menu/>
+			<@template.logo/>
 		</div>
 	</div>
 	<!-- //banner -->
@@ -241,7 +196,7 @@
 
 					});
 				</script>
-				<script type="text/javascript" src="../static/js/jquery.flexisel.js"></script>
+				<script type="text/javascript" src="${template.base}/js/index/jquery.flexisel.js"></script>
 			</div>
 		</div>
 	</div>
