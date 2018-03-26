@@ -21,12 +21,12 @@
 	<div class="banner">
 		<div class="container">
 			<#if currentUser??>
-				<@template.loginUser userId="${currentUser.id}" userName="${currentUser.name}" />
+				<@template.loginUser userId="${currentUser.id}" userName="${currentUser.name}" userImage="${currentUser.image!''}"/>
 			<#else>
 				<@template.unLoginUser/>
 			</#if>
 			<@template.menu/>
-			<@template.logo/>
+			<@template.banner/>
 		</div>
 	</div>
 	<!-- //banner -->
@@ -34,15 +34,15 @@
 	<div class="banner-bottom-position">
 		<div class="col-md-6 banner-bottom-position-grid">
 			<div class="banner-bottom-position-grid-left">
-				<img src="images/3.jpg" alt=" " class="img-responsive" />
+				<img src="${template.base}/images/feature1.jpg" alt=" " class="img-responsive" />
 				<div class="banner-bottom-position-grid-left-pos">
-					<h4>Voluptates repudiandae sint</h4>
+					<h4>产品特点一,查找距离最近的培训学校</h4>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6 banner-bottom-position-gridr">
 			<h3>01.</h3>
-			<p>To take a trivial example, which of us ever undertakes laborious physical
+			<p>下面的图片可以展示距离最近的培训学校,undertakes laborious physical
 				exercise, except to obtain some advantage from it? But who has any right to
 				find fault with a man who chooses to enjoy a pleasure.</p>
 		</div>
@@ -205,15 +205,15 @@
 	<div class="banner-bottom-position">
 		<div class="col-md-7 banner-bottom-position-gridr right">
 			<h3>02.</h3>
-			<p>To take a trivial example, which of us ever undertakes laborious physical
+			<p>下面的图片可以展示口碑好或者价格有优惠的培训学校,us ever undertakes laborious physical
 				exercise, except to obtain some advantage from it? But who has any right to
 				find fault with a man who chooses to enjoy a pleasure.</p>
 		</div>
 		<div class="col-md-5 banner-bottom-position-grid">
 			<div class="banner-bottom-position-grid-left Voluptates">
-				<img src="images/4.jpg" alt=" " class="img-responsive" />
+				<img src="${template.base}/images/feature2.jpg" alt=" " class="img-responsive" />
 				<div class="banner-bottom-position-grid-left-pos repudiandae">
-					<h4>Voluptates repudiandae sint</h4>
+					<h4>产品特点二,查找口碑好的或者有优惠的培训学校</h4>
 				</div>
 			</div>
 		</div>

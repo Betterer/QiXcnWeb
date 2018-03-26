@@ -16,13 +16,10 @@
                 <!-- CSS -->
                 <link rel="stylesheet" href="${base}/css/bootstrap.min.css">
                 <link rel="stylesheet" href="${base}/css/font-awesome.min.css">
-                <link rel="stylesheet" href="${base}/css/form-elements.css">
-
 
                 <!-- Javascript -->
                 <script src="${base}/js/common/jquery-1.11.1.min.js"></script>
                 <script src="${base}/js/common/bootstrap.min.js"></script>
-                <script src="${base}/js/common/jquery.validate.js"></script>
                 <script src="${base}/js/common/menuAndNavbar.js"></script>
                 <#nested>
             </head>
@@ -37,18 +34,21 @@
         </#macro>
 
         <!-- 用户头像 -->
-        <#macro loginUser userId userName='游客' messageCount=12>
+        <#macro loginUser userId userName='游客' messageCount=12 userImage=''>
             <div class="banner_top">
                 <div class="banner_top_left">
                     <div class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <img src="images/1.png"/>
+                            <#if userImage != ''>
+                                <img class="user_head_mid" src="images/1.png"/>
+                            <#else>
+                                <img class="user_head_mid" src="${base}/images/default_user.png"/>
+                            </#if>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">系统消息<span class="badge">${messageCount}</span></a></li>
-                            <li><a href="#">个人中心</a></li>
-                            <li><a href="#">用户设置</a></li>
-                            <li><a href="#">机构入驻</a></li>
+                            <li><a href="${base}/system_message">系统消息<span class="badge">${messageCount}</span></a></li>
+                            <li><a href="${base}/person_setting">个人设置</a></li>
+                            <li><a href="${base}/school_enter">机构入驻</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
                                 <a href="javascript:void(0);" id="logout">登出</a>
@@ -68,7 +68,8 @@
         <#macro unLoginUser>
             <div class="banner_top">
                 <div class="banner_top_left">
-                    <p>你好游客, <a href="${base}/login">登录</a>或者<a href="${base}/register">注册</a></p>
+                    <img class="user_head_mid" src="${base}/images/default_user.png"/>
+                    <span style="color: white;">你好游客, <a href="${base}/login">登录</a>或者<a href="${base}/register">注册</a>.</span>
                 </div>
                 <div class="clearfix"> </div>
             </div>
@@ -101,7 +102,7 @@
             </nav>
         </#macro>
 
-        <#macro logo>
+        <#macro banner>
             <div class="logo">
                 <a href="index.html">Qi Xian<span>为孩子画出更好的起跑线</span></a>
             </div>
@@ -109,6 +110,48 @@
                 <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
                     adipisci velit, sed quia non numquam eius modi.</p>
             </div>
+        </#macro>
+
+        <!-- 系统页面头部导航-->
+        <#macro system_header>
+            <header role="header">
+                <div class="container">
+                    <!-- logo -->
+                    <h1>
+                        <a href="${base}/index" title="avana LLC"><img src="${base}/images/logo.png" title="avana LLC" alt="avana LLC"/></a>
+                    </h1>
+                    <!-- logo -->
+                    <!-- nav -->
+                    <nav role="header-nav" class="navy">
+                        <ul>
+                            <li><a href="${base}/system_message" title="Work">系统消息</a></li>
+                            <li><a href="${base}/person_setting" title="About">个人设置</a></li>
+                            <li><a href="${base}/school_enter" title="Blog">学校入驻</a></li>
+                        </ul>
+                    </nav>
+                    <!-- nav -->
+                </div>
+            </header>
+        </#macro>
+
+        <!--系统页面底部-->
+        <#macro system_footer>
+            <footer role="footer">
+            <!-- logo -->
+            <h1>
+                <a href="${base}/index" title="avana LLC"><img src="${base}/images/logo.png" title="avana LLC" alt="avana LLC"/></a>
+            </h1>
+            <!-- logo -->
+            <!-- nav -->
+            <nav role="footer-nav">
+                <ul>
+                    <li><a href="${base}/system_message" title="Work">系统消息</a></li>
+                    <li><a href="${base}/person_setting" title="About">个人设置</a></li>
+                    <li><a href="${base}/school_enter" title="Blog">学校入驻</a></li>
+                </ul>
+            </nav>
+            <!-- nav -->
+        </footer>
         </#macro>
 
 </#compress>

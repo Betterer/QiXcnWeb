@@ -1,6 +1,8 @@
 <#import "common/template.ftl" as template>
 <@template.head title="起线科技--注册">
 	<link rel="stylesheet" href="${template.base}/css/login.css">
+	<link rel="stylesheet" href="${template.base}/css/form-elements.css">
+	<script src="${template.base}/js/common/jquery.validate.js"></script>
 	<script src="${template.base}/js/common/jquery.backstretch.min.js"></script>
 	<script src="${template.base}/js/common/retina-1.1.0.min.js"></script>
 	<script src="${template.base}/js/index/login.js"></script>

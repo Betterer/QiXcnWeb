@@ -6,6 +6,7 @@ import com.qixcnweb.qixian.remote.TestFeignClient;
 import com.qixcnweb.qixian.service.UserService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -45,7 +46,6 @@ public class IndexController {
         //从redis缓存中获取用户信息
         //User user = (User) redisTemplate.opsForValue().get("user");
         resultMap.put("currentUser",user);
-        System.out.println(user);
         return "index";
     }
 
@@ -107,6 +107,39 @@ public class IndexController {
     @ResponseBody
     public String testEmail(){
         return testFeignClient.testEmail();
+    }
+
+    /**
+     * 跳转到系统页面:个人设置
+     * @return
+     */
+    @GetMapping("/system_message")
+    @PreAuthorize("isAuthenticated()")
+    public String systemMssage(){
+        return "system/system_message";
+    }
+
+    /**
+     * 跳转到系统页面:个人设置
+     * @return
+     */
+    @GetMapping("/person_setting")
+    @PreAuthorize("isAuthenticated()")
+    public String personSetting(HttpServletRequest request,Map<String,Object> resultMap){
+        //从session中取出登录用户信息
+        User user = (User) request.getSession().getAttribute("user");
+        resultMap.put("user",user);
+        return "system/person_setting";
+    }
+
+    /**
+     * 跳转到系统页面:个人设置
+     * @return
+     */
+    @GetMapping("/school_enter")
+    @PreAuthorize("isAuthenticated()")
+    public String schoolEnter(){
+        return "system/school_enter";
     }
 
 
