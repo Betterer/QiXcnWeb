@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * 图片工具类
@@ -101,6 +102,19 @@ public class ImageUtils {
         }
 
         return resultFile;
+    }
+
+
+    /**
+     * 生产一个随机的图片名称
+     * @return
+     */
+    public String createImgName(){
+        Random random = new Random();
+        String randomNumber = String.valueOf(random.nextInt(1000));
+        String timeStap = String.valueOf(System.currentTimeMillis());
+        return randomNumber+timeStap;
+
     }
 
 }

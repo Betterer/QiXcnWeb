@@ -2,6 +2,7 @@ package com.qixcnweb.qixian.controller;
 
 import com.qixcnweb.qixian.domain.User;
 import com.qixcnweb.qixian.service.UserService;
+import com.qixcnweb.qixian.utils.CommonUtils;
 import com.qixcnweb.qixian.utils.ImageUtils;
 import com.qixcnweb.qixian.utils.JsonUtils;
 import org.apache.commons.collections.map.HashedMap;
@@ -26,6 +27,9 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private CommonUtils commonUtils;
 
     @Resource
     private ImageUtils imageUtils;
@@ -94,36 +98,37 @@ public class UserController {
         Map<String,Object> resultMap = new HashedMap();
         //获取当前用户
         User user = (User) request.getSession().getAttribute("user");
-
-
         //得到剪裁的坐标和宽高,将图片裁剪
         Map<String, Object> json2Map = jsonUtils.json2Map(data);
-
 
         String x1 = json2Map.get("x").toString();
         String y1 = json2Map.get("y").toString();
         String width1 = json2Map.get("width").toString();
         String height1 = json2Map.get("height").toString();
 
+        Integer x = commonUtils.ImagePosition2Int(x1);                  // 剪裁X坐标
+        Integer y = commonUtils.ImagePosition2Int(y1);                  //剪裁Y坐标
+        Integer width = commonUtils.ImagePosition2Int(width1);      //剪裁宽
+        Integer height = commonUtils.ImagePosition2Int(height1);   //剪裁高
 
-        //todo:这里有BUG  如果字符串不包含小数点就会报异常
-        Integer x = Integer.parseInt(x1.substring(0,x1.indexOf(".")));                  // 剪裁X坐标
-        Integer y = Integer.parseInt(y1.substring(0,y1.indexOf(".")));                  //剪裁Y坐标
-        Integer width = Integer.parseInt(width1.substring(0,width1.indexOf(".")));      //剪裁宽
-        Integer height = Integer.parseInt(height1.substring(0,height1.indexOf(".")));   //剪裁高
 
+        //获取图片后缀
         String filename = multipartFile.getOriginalFilename();
         String fileSuffix = filename.substring(filename.lastIndexOf(".")+1,filename.length());      //转换图片格式
 
-
-
+        //剪裁图片,并返回新图片
         File file = imageUtils.cutImage(multipartFile.getInputStream(),fileSuffix, x, y, width, height);
-        //将图片上传,并且更新用户image字段
-        String newFileName = userService.updateUserHead(file, fileSuffix, user);
 
-        //todo:还需要返回新图片的访问地址
+        //将图片上传,并且更新用户image字段,返回新图片的访问url
+        String fileUrl = userService.updateUserHead(file, fileSuffix, user);
+
+        //更新session中的User信息
+        user.setImage(fileUrl);
+        request.getSession().setAttribute("user",user);
+
+        //封装结果并返回
         resultMap.put("state",200);
-        resultMap.put("result","这个放心图片的访问地址");
+        resultMap.put("result",fileUrl);
         return resultMap;
     }
 }

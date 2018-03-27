@@ -5,6 +5,7 @@ import com.qixcnweb.qixian.dao.UserDao;
 import com.qixcnweb.qixian.domain.User;
 import com.qixcnweb.qixian.utils.CommonUtils;
 import com.qixcnweb.qixian.utils.FileUploadUtils;
+import com.qixcnweb.qixian.utils.ImageUtils;
 import com.qixcnweb.qixian.utils.MD5Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,9 @@ public class UserService {
 
     @Resource
     private FileUploadUtils fileUploadUtils;
+
+    @Resource
+    private ImageUtils imageUtils;
 
     @Resource
     private UserDao userDao;
@@ -89,15 +93,19 @@ public class UserService {
      */
     public String updateUserHead(File file,String fileSuffix, User user) throws IOException {
         //将文件重命名
-        String imgName = fileUploadUtils.createImgName();
+        String imgName = imageUtils.createImgName();
         String fileName = Constant.USER_HEAD_IMAGE+imgName+"."+fileSuffix;
         //将文件上传到阿里云OSS
         fileUploadUtils.upload2OSS(fileName,file);
         //将文件名更行到数据库
         user.setImage(fileName);
+        userDao.save(user);
         //将临时文件删除
         file.delete();
-        userDao.save(user);
-        return fileName;
+        //生成访问文件的url
+        //访问文件的过期时间
+        int overTime = 1000*60*60*24;  //设置24小时后过期
+        String fileUrl = fileUploadUtils.getFileUrl(fileName,overTime);
+        return fileUrl;
     }
 }

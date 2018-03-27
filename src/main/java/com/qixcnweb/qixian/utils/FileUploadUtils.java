@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -68,15 +70,20 @@ public class FileUploadUtils {
         ossClient.shutdown();
     }
 
+
     /**
-     * 生产一个随机的图片名称
+     * 获取OSS文件的访问URL
+     * @param fileName
      * @return
      */
-    public String createImgName(){
-        Random random = new Random();
-        String randomNumber = String.valueOf(random.nextInt(1000));
-        String timeStap = String.valueOf(System.currentTimeMillis());
-        return randomNumber+timeStap;
+    public String getFileUrl(String fileName,Integer overtime){
+        // 创建OSSClient实例
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        //设置访问过期时间为1小时
+        Date date = new Date(new Date().getTime() + overtime);
+        //获取访问url
+        URL url = ossClient.generatePresignedUrl(bucketName, fileName, date);
 
+        return url.toString();
     }
 }

@@ -22,12 +22,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Resource
     private UserDao userDao;
 
+    @Resource
+    private CommonUtils commonUtils;
+
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = null;
-        if(CommonUtils.isPhone(name)){     //如果输入账号是电话号码格式
+        if(commonUtils.isPhone(name)){     //如果输入账号是电话号码格式
             user = userDao.findUserByPhone(name);
-        }else if(CommonUtils.isEmail(name)){   //如果输入账号是电子邮箱格式
+        }else if(commonUtils.isEmail(name)){   //如果输入账号是电子邮箱格式
             user = userDao.findUserByEmail(name);
         }else{          //如果是普通账号
             user = userDao.findUserByName(name);
