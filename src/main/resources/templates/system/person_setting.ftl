@@ -32,7 +32,7 @@
                 <!-- Current avatar -->
                 <div class="avatar-view" title="Change the avatar">
                     <#if user.image??>
-                        <img src="${template.base}/images/picture.jpg"/>
+                        <img src="${user.image}"/>
                     <#else>
                         <img src="${template.base}/images/default_user.png"/>
                     </#if>

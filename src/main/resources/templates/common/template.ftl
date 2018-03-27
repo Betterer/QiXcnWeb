@@ -40,7 +40,7 @@
                     <div class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <#if userImage != ''>
-                                <img class="user_head_mid" src="images/1.png"/>
+                                <img class="user_head_mid" src="${userImage}"/>
                             <#else>
                                 <img class="user_head_mid" src="${base}/images/default_user.png"/>
                             </#if>
