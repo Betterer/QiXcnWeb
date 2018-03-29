@@ -112,15 +112,14 @@ public class UserController {
         Integer height = commonUtils.ImagePosition2Int(height1);   //剪裁高
 
 
-        //获取图片后缀
+        //获取图片名称
         String filename = multipartFile.getOriginalFilename();
-        String fileSuffix = filename.substring(filename.lastIndexOf(".")+1,filename.length());      //转换图片格式
 
-        //剪裁图片,并返回新图片
-        File file = imageUtils.cutImage(multipartFile.getInputStream(),fileSuffix, x, y, width, height);
+        //剪裁图片,并返回裁剪后的新图片
+        File file = imageUtils.cutImage(multipartFile.getInputStream(),filename, x, y, width, height);
 
-        //将图片上传,并且更新用户image字段,返回新图片的访问url
-        String fileUrl = userService.updateUserHead(file, fileSuffix, user);
+        //将裁剪后的新图片上传,并且更新用户image字段,返回新图片的访问url
+        String fileUrl = userService.updateUserHead(file, user);
 
         //更新session中的User信息
         user.setImage(fileUrl);

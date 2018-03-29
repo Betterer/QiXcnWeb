@@ -30,7 +30,7 @@
 
             <div class="contat-from-wrapper" id="crop-avatar">
                 <!-- Current avatar -->
-                <div class="avatar-view" title="Change the avatar">
+                <div class="avatar-view" title="修改用户头像">
                     <#if user.image??>
                         <img src="${user.image}"/>
                     <#else>

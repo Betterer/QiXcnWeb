@@ -17,7 +17,6 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = -2436918557958554206L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

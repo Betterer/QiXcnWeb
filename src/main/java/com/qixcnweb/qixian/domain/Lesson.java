@@ -15,7 +15,6 @@ public class Lesson implements Serializable {
     private static final long serialVersionUID = -8998157940601916649L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

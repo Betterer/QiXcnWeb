@@ -88,13 +88,13 @@ public class UserService {
     /**
      * 更新用户头像
      * @param file    图片文件
-     * @param fileSuffix  图片后缀
      * @param user    当前登录用户
      */
-    public String updateUserHead(File file,String fileSuffix, User user) throws IOException {
+    public String updateUserHead(File file, User user) throws IOException {
         //将文件重命名
-        String imgName = imageUtils.createImgName();
-        String fileName = Constant.USER_HEAD_IMAGE+imgName+"."+fileSuffix;
+        String imgName = imageUtils.createImgName(file.getName());
+        //文件名前加上OSS服务起的图片目录,指定存到哪个目录底下
+        String fileName = Constant.USER_HEAD_IMAGE+imgName;
         //将文件上传到阿里云OSS
         fileUploadUtils.upload2OSS(fileName,file);
         //将文件名更行到数据库
@@ -104,8 +104,18 @@ public class UserService {
         file.delete();
         //生成访问文件的url
         //访问文件的过期时间
-        int overTime = 1000*60*60*24;  //设置24小时后过期
+        int overTime = 1000*60*60*24;  //设置访问图片地址24小时后过期
         String fileUrl = fileUploadUtils.getFileUrl(fileName,overTime);
         return fileUrl;
+    }
+
+    /**
+     * 根据ID查询用户
+     * @param userId
+     * @return
+     */
+    public User findUserById(Integer userId) {
+        User user = userDao.findUserById(userId);
+        return user;
     }
 }

@@ -9,6 +9,20 @@ public class Constant {
     public static final Integer USER_STATUS_NORMAL = 1;
     public static final Integer USER_STATUS_DELETE = 0;
 
+
+    //用户类型
+    public static final Integer SCHOOL_ADMIN = 3;         //学校法人
+    public static final Integer SCHOOL_MANAGER = 2;       //学校管理人
+
+    //学校状态
+    public static final Integer SCHOOL_UNABLE = -1;         //审核未通过
+    public static final Integer SCHOOL_WAITE = 0;           //待审核
+    public static final Integer SCHOOL_ABLE = 1;            //审核通过
+
     //阿里云OSS图片存放路径
-    public static final String USER_HEAD_IMAGE = "user_head/";
+    public static final String USER_HEAD_IMAGE = "user_head/";      //用户头像目录 OSS服务器存放目录
+    public static final String USER_INDENTITY = "user_identity/";    //用户身份证 OSS服务器存放目录
+    public static final String SCHOOL_IMAGES = "school_images/";    //学校介绍 OSS服务器存放目录
+    public static final String SCHOOL_LICENSE = "school_license/";  //学校(培训机构)营业执照 OSS服务器存放目录
+
 }

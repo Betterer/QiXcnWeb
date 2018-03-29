@@ -47,23 +47,11 @@ public class User implements Serializable {
     @Column(name = "status")
     private Integer status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id")
-    private School school;              //关联学校(是哪个培训机构的负责人)
-
     @ManyToMany(mappedBy="userList", fetch = FetchType.EAGER)
     private Set<Role> roleList = new HashSet<Role>();           //用户角色
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Comment> commentList;      //关联评论
-
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
-    }
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
@@ -174,7 +162,6 @@ public class User implements Serializable {
                 ", type=" + type +
                 ", realName='" + realName + '\'' +
                 ", identity='" + identity + '\'' +
-                ", school=" + school +
                 ", commentList=" + commentList +
                 '}';
     }

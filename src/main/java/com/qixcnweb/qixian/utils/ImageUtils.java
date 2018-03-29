@@ -22,19 +22,19 @@ public class ImageUtils {
     /**
      * 裁剪图片
      * @param imageInputStream   目标图片出入流
-     * @param fileSuffix    目标图片后缀
+     * @param fileName    目标图片名称后缀
      * @param x     裁剪点X坐标
      * @param y     裁剪点Y坐标
      * @param width 裁剪宽
      * @param height 裁剪高
      */
-    public File cutImage(InputStream imageInputStream,String fileSuffix,Integer x,Integer y,Integer width,Integer height){
+    public File cutImage(InputStream imageInputStream,String fileName,Integer x,Integer y,Integer width,Integer height){
 
         FileInputStream is =  null;
         ImageInputStream iis = null;
 
 
-        File resultFile = new File("F://temp."+fileSuffix);
+        File resultFile = new File("F://"+fileName);
 
         try {
             // 读取图片文件
@@ -45,6 +45,8 @@ public class ImageUtils {
             * 声称能够解码指定格式。 参数：formatName - 包含非正式格式名称 .
             *（例如 "jpeg" 或 "tiff"）等 。
             */
+            //得到文件后缀
+            String fileSuffix = fileName.substring(fileName.lastIndexOf(".")+1,fileName.length());
             Iterator<ImageReader> it= ImageIO.getImageReadersByFormatName(fileSuffix);
             ImageReader reader = it.next();
             // 获取图片流
@@ -104,16 +106,38 @@ public class ImageUtils {
         return resultFile;
     }
 
-
     /**
-     * 生产一个随机的图片名称
+     * 得到文件的后缀
      * @return
      */
-    public String createImgName(){
+    public String getFileSuffix(String fileName){
+        String fileSuffix = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+        return fileSuffix;
+    }
+
+    /**
+     * 得到一个随机的数字字符串作为新的图片名称
+     * @return
+     */
+    public String randomImageName(){
         Random random = new Random();
         String randomNumber = String.valueOf(random.nextInt(1000));
         String timeStap = String.valueOf(System.currentTimeMillis());
         return randomNumber+timeStap;
+    }
+
+    /**
+     * 将原来的文件名替换为一个随机的数字字符串
+     * @param originFileName        //原始文件名
+     * @return
+     */
+    public String createImgName(String originFileName){
+        //获得文件后缀
+        String fileSuffix = getFileSuffix(originFileName);
+        //获得一个随机的数字字符串
+        String randomNumber = randomImageName();
+        //返回新的文件名
+        return randomNumber+fileSuffix;
 
     }
 

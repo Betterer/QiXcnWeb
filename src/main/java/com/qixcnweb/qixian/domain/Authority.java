@@ -18,7 +18,6 @@ public class Authority implements Serializable {
     private static final long serialVersionUID = -2567268503447312228L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

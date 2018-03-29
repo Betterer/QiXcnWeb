@@ -269,9 +269,6 @@
       if (data.state === 200) {
         if (data.result) {
           this.url = data.result;
-          console.log("好烦  我艹..");
-          console.log(this.support.datauri);
-          console.log(this.uploaded);
           if (this.support.datauri || this.uploaded) {
             this.uploaded = false;
             this.cropDone();

@@ -16,7 +16,6 @@ public class School implements Serializable {
     private static final long serialVersionUID = 4132185266625012025L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -56,6 +55,9 @@ public class School implements Serializable {
 
     @Column( name = "license")
     private String license;
+
+    @Column(name = "status")
+    private Integer status;
 
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "school")
     private List<Lesson> lessonList;                //关联课程
@@ -171,5 +173,34 @@ public class School implements Serializable {
 
     public void setLessonList(List<Lesson> lessonList) {
         this.lessonList = lessonList;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "School{" +
+                "id=" + id +
+                ", user=" + user +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", address='" + address + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", email='" + email + '\'' +
+                ", position='" + position + '\'' +
+                ", geohash='" + geohash + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", webSite='" + webSite + '\'' +
+                ", license='" + license + '\'' +
+                ", status='" + status + '\'' +
+                ", lessonList=" + lessonList +
+                '}';
     }
 }
