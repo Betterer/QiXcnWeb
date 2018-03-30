@@ -52,25 +52,10 @@ var myDropzone = new Dropzone("#myDropzone", {
         $(".schoolImageUrl").each(function () {
             var fileName = $(this).attr("data");
             var path = $(this).val();
-            // var mockFile = {
-            //     //需要显示给用户的图片名
-            //     name: "school.jpg",
-            //     //图片尺寸
-            //     size: 2048,
-            //     //图片文件类型
-            //     type: 'image/jpeg'
-            // };
-            // //添加mock图片到显示区域
-            // myDropzone.addFile.call (myDropzone,mockFile);
-            // //添加数据源给mock图片
-            // myDropzone.options.thumbnail.call (myDropzone,mockFile,path);
-
-
-             var mockFile = { name: fileName, accepted:true };
-             myDropzone.emit("addedfile", mockFile);
-             myDropzone.emit("thumbnail", mockFile, path);
-             myDropzone.emit("complete", mockFile);
-
+            var mockFile = { name: fileName, accepted:true };
+            myDropzone.emit("addedfile", mockFile);
+            myDropzone.emit("thumbnail", mockFile, path);
+            myDropzone.emit("complete", mockFile);
         });
     }
 });
@@ -134,12 +119,6 @@ $("#school_enter").validate({
         webSite:{
             webSite:true
         },
-        identityImage:{
-            required:true
-        },
-        licenseImage:{
-            required:true
-        },
         address:{
             required:true
         },
@@ -164,12 +143,6 @@ $("#school_enter").validate({
         },
         webSite:{
             webSite:"请输入正确的网址"
-        },
-        identityImage:{
-            required:"请上传法人身份证"
-        },
-        licenseImage:{
-            required:"请上传营业执照"
         },
         address:{
             required:"请输入学校地址"

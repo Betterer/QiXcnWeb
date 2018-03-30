@@ -68,32 +68,36 @@ public class SchoolController {
     @RequestMapping(value = "/enter", method = RequestMethod.POST)
     public String enter(@RequestParam("identityImage") MultipartFile identityImage, @RequestParam("licenseImage") MultipartFile licenseImage,
                         @Valid School school, BindingResult schoolBindResult, HttpServletRequest request){
+
+        //获取当前登录用户
+        User sessionUser = (User)request.getSession().getAttribute("user");
+        User user = userService.findUserById(sessionUser.getId());
+
         if(!schoolBindResult.hasErrors()){
             //保存法人身份证信息,上传到阿里云服务器,学校介绍目录
-            String identityImageName = schoolService.uploadImages(identityImage, Constant.USER_INDENTITY);
+            if(identityImage!=null && !"".equals(identityImage.getOriginalFilename())){
+                String identityImageName = schoolService.uploadImages(identityImage, Constant.USER_INDENTITY);
+                user.setIdentity(identityImageName);        //更新用户的identity字段
+                sessionUser.setIdentity(identityImageName); //更新session中存储的用户信息
+            }
             //保存营业执照
-            String licenseImageName = schoolService.uploadImages(licenseImage, Constant.SCHOOL_LICENSE);
-
-            //获取当前登录用户
-            User sessionUser = (User)request.getSession().getAttribute("user");
-            User user = userService.findUserById(sessionUser.getId());
+            if(licenseImage!=null && !"".equals(licenseImage.getOriginalFilename())){
+                String licenseImageName = schoolService.uploadImages(licenseImage, Constant.SCHOOL_LICENSE);
+                school.setLicense(licenseImageName);
+            }
 
             //保存school信息
-            school.setLicense(licenseImageName);        //更新学校营业执照
             school.setUser(user);                       //关联用户
             school.setStatus(Constant.SCHOOL_WAITE);    //学校状态为0 :待审核信息
             schoolService.saveSchool(school);
 
 
             //更新用户信息
-            user.setIdentity(identityImageName);        //更新用户的identity字段
             user.setType(Constant.SCHOOL_ADMIN);        //更新用户类型
 
             //将用户信息更新到session中
             sessionUser.setType(Constant.SCHOOL_ADMIN);
-            sessionUser.setImage(identityImageName);
             request.getSession().setAttribute("user",sessionUser);
-
             userService.saveUser(user);
 
             //todo:调用远程服务发送消息

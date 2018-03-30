@@ -86,6 +86,7 @@
 
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                        <input name="license" type="hidden" value="${school.license!''}"/>
                         <input name="license_path" type="text" readonly placeholder="上传营业执照" onclick="document.school_enter.licenseImage.click()">
                         <input type="file" name="licenseImage" id="licenseImage" style="display:none" onChange="document.school_enter.license_path.value=this.value">
                         <#if school.licenseImageUrl??>
