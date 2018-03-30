@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**学校类
  * Created by dingxiaochi on 2018/3/16.
@@ -54,10 +55,21 @@ public class School implements Serializable {
     private String webSite;
 
     @Column( name = "license")
-    private String license;
+    private String license;                 //学校营业执照
 
     @Column(name = "status")
     private Integer status;
+
+    @Transient
+    private String managerIdentityImageUrl;         //学校负责人的身份证图片访问url
+
+    @Transient
+    private String licenseImageUrl;                 //学校营业执照图片访问url
+
+    @Transient
+    private Map<String,String> schoolImageUrlMap;       //学校介绍图片访问url
+
+
 
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "school")
     private List<Lesson> lessonList;                //关联课程
@@ -181,6 +193,30 @@ public class School implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getManagerIdentityImageUrl() {
+        return managerIdentityImageUrl;
+    }
+
+    public void setManagerIdentityImageUrl(String managerIdentityImageUrl) {
+        this.managerIdentityImageUrl = managerIdentityImageUrl;
+    }
+
+    public String getLicenseImageUrl() {
+        return licenseImageUrl;
+    }
+
+    public void setLicenseImageUrl(String licenseImageUrl) {
+        this.licenseImageUrl = licenseImageUrl;
+    }
+
+    public Map<String, String> getSchoolImageUrlMap() {
+        return schoolImageUrlMap;
+    }
+
+    public void setSchoolImageUrlMap(Map<String, String> schoolImageUrlMap) {
+        this.schoolImageUrlMap = schoolImageUrlMap;
     }
 
     @Override

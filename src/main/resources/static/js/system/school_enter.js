@@ -44,9 +44,44 @@ var myDropzone = new Dropzone("#myDropzone", {
         //将图片从隐藏input删除
         $("#image").val($("#image").val().replace(","+imageName,''));
         //todo:将图片从OSS服务器中删除
+    },
+    init:function(){
+        //图片回显
+        var myDropzone = this;
+        //获取已存的图片
+        $(".schoolImageUrl").each(function () {
+            var fileName = $(this).attr("data");
+            var path = $(this).val();
+            // var mockFile = {
+            //     //需要显示给用户的图片名
+            //     name: "school.jpg",
+            //     //图片尺寸
+            //     size: 2048,
+            //     //图片文件类型
+            //     type: 'image/jpeg'
+            // };
+            // //添加mock图片到显示区域
+            // myDropzone.addFile.call (myDropzone,mockFile);
+            // //添加数据源给mock图片
+            // myDropzone.options.thumbnail.call (myDropzone,mockFile,path);
+
+
+             var mockFile = { name: fileName, accepted:true };
+             myDropzone.emit("addedfile", mockFile);
+             myDropzone.emit("thumbnail", mockFile, path);
+             myDropzone.emit("complete", mockFile);
+
+        });
     }
 });
 
+/**
+ * dropzone图片回显
+ */
+// var mockFile = { name: "123.jpg", accepted:true };
+// myDropzone.emit("addedfile", mockFile);
+// myDropzone.emit("thumbnail", mockFile, "http://edms.kitesky.com/upload/image/20170422/52edf3c2aabf171315d968d9af814d0c.jpg");
+// myDropzone.emit("complete", mockFile);
 
 
 /**

@@ -1,5 +1,6 @@
 package com.qixcnweb.qixian.handler;
 
+import com.qixcnweb.qixian.constant.Constant;
 import com.qixcnweb.qixian.dao.UserDao;
 import com.qixcnweb.qixian.domain.User;
 import com.qixcnweb.qixian.utils.FileUploadUtils;
@@ -39,7 +40,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         if(user.getImage()!=null){
             //OSS访问url过期时间
             Integer overtime = 1000*60*60*24; //过期时间设置为24小时
-            String fileUrl = fileUploadUtils.getFileUrl(user.getImage(), overtime);
+            String fileUrl = fileUploadUtils.getFileUrl(user.getImage(), overtime,Constant.OSS_STYLE_HEAD_MID);
             user.setImage(fileUrl);
         }
         //将用户信息存在redis缓存中,方便使用

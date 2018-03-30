@@ -72,7 +72,7 @@ public class SchoolController {
             //保存法人身份证信息,上传到阿里云服务器,学校介绍目录
             String identityImageName = schoolService.uploadImages(identityImage, Constant.USER_INDENTITY);
             //保存营业执照
-            String licenseImageName = schoolService.uploadImages(identityImage, Constant.SCHOOL_LICENSE);
+            String licenseImageName = schoolService.uploadImages(licenseImage, Constant.SCHOOL_LICENSE);
 
             //获取当前登录用户
             User sessionUser = (User)request.getSession().getAttribute("user");
@@ -88,6 +88,11 @@ public class SchoolController {
             //更新用户信息
             user.setIdentity(identityImageName);        //更新用户的identity字段
             user.setType(Constant.SCHOOL_ADMIN);        //更新用户类型
+
+            //将用户信息更新到session中
+            sessionUser.setType(Constant.SCHOOL_ADMIN);
+            sessionUser.setImage(identityImageName);
+            request.getSession().setAttribute("user",sessionUser);
 
             userService.saveUser(user);
 

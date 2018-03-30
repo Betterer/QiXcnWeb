@@ -3,6 +3,7 @@ package com.qixcnweb.qixian.service;
 import com.qixcnweb.qixian.constant.Constant;
 import com.qixcnweb.qixian.dao.SchoolDao;
 import com.qixcnweb.qixian.domain.School;
+import com.qixcnweb.qixian.domain.User;
 import com.qixcnweb.qixian.utils.CommonUtils;
 import com.qixcnweb.qixian.utils.FileUploadUtils;
 import com.qixcnweb.qixian.utils.ImageUtils;
@@ -63,5 +64,15 @@ public class SchoolService {
      */
     public void saveSchool(School school) {
         schoolDao.save(school);
+    }
+
+    /**
+     * 根据用户ID查询学校信息
+     * @param userId
+     * @return
+     */
+    public School findSchoolByUserId(Integer userId){
+        School school = schoolDao.findSchoolByUserId(userId);
+        return school;
     }
 }

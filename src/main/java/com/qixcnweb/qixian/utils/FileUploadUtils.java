@@ -1,6 +1,9 @@
 package com.qixcnweb.qixian.utils;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.GeneratePresignedUrlRequest;
+import com.aliyun.oss.model.GetObjectRequest;
+import com.aliyun.oss.model.OSSObject;
 import com.qixcnweb.qixian.configuration.AliyunOSSProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,19 +74,48 @@ public class FileUploadUtils {
     }
 
 
+
     /**
-     * 获取OSS文件的访问URL
+     * 获取OSS文件的访问URL,带过期时间
      * @param fileName
+     * @param overtime  URL过期时间
      * @return
      */
     public String getFileUrl(String fileName,Integer overtime){
         // 创建OSSClient实例
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-        //设置访问过期时间为1小时
+        //设置访问过期时间
         Date date = new Date(new Date().getTime() + overtime);
         //获取访问url
         URL url = ossClient.generatePresignedUrl(bucketName, fileName, date);
-
+        // 关闭client
+        ossClient.shutdown();
         return url.toString();
     }
+
+
+    /**
+     * 获取OSS文件的访问URL,带过期时间带样式
+     * @param fileName      文件名
+     * @param overtime      过期时间
+     * @param style     OSS中定义好的样式
+     * @return
+     */
+    public String getFileUrl(String fileName,Integer overtime, String style){
+        // 创建OSSClient实例
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        //设置访问过期时间
+        Date date = new Date(new Date().getTime() + overtime);
+        //request中添加样式和到期时间
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fileName);
+        request.setProcess(style);
+        request.setExpiration(date);
+        //获取访问url
+        URL url = ossClient.generatePresignedUrl(request);
+        // 关闭client
+        ossClient.shutdown();
+        return url.toString();
+    }
+
+
 }
