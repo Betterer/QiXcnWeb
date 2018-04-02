@@ -93,7 +93,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav cl-effect-14">
-                        <li><a href="index.html" class="active">首页</a></li>
+                        <li><a href="${base}/index" class="active">首页</a></li>
                         <li><a href="about.html">机构列表(学校)</a></li>
                         <li><a href="features.html">机构列表(地图)</a></li>
                         <li><a href="portfolio.html">关于我们</a></li>

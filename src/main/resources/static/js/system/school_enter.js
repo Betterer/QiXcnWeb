@@ -29,7 +29,11 @@ var myDropzone = new Dropzone("#myDropzone", {
         if (response.status == 200) {
             //将上传成功的文件名存到隐藏的<input name="image" id="image">中,方便表单上传
             var value = $("#image").val();
-            $("#image").val(value+","+response.fileName);
+            if(value=='' || value==null){
+                $("#image").val(response.fileName);
+            }else{
+                $("#image").val(value+","+response.fileName);
+            }
             //将dropzone中图片的原名替换
             $(file.previewTemplate).children('.dz-details').children('.dz-filename').children('span').text(response.fileName);
         } else {

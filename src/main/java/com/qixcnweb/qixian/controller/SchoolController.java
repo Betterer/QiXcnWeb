@@ -3,8 +3,10 @@ package com.qixcnweb.qixian.controller;
 import com.qixcnweb.qixian.constant.Constant;
 import com.qixcnweb.qixian.domain.School;
 import com.qixcnweb.qixian.domain.User;
+import com.qixcnweb.qixian.remote.RabbitFeignClient;
 import com.qixcnweb.qixian.service.SchoolService;
 import com.qixcnweb.qixian.service.UserService;
+import com.qixcnweb.qixian.utils.FileUploadUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +35,12 @@ public class SchoolController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private RabbitFeignClient rabbitFeignClient;
+
+    @Resource
+    private FileUploadUtils fileUploadUtils;
 
 
     /**
@@ -100,11 +110,69 @@ public class SchoolController {
             request.getSession().setAttribute("user",sessionUser);
             userService.saveUser(user);
 
-            //todo:调用远程服务发送消息
-            //todo:调用远程服务发送邮件
+            //调用rabbitmq的远程服务发送消息到 "qixian.mail"队列中,mail服务收到消息之后会发送邮件
+            rabbitFeignClient.sendMessageWithoutExchange("qixian.mail",user);
+
             return "redirect:/index";
         }else{
             return "errorpage/500";
         }
+    }
+
+    /**
+     * 跳转到学校详情页面
+     * @param schoolId
+     * @return
+     */
+    @GetMapping("/index/{schoolId}")
+    public String toSchoolPage(HttpServletRequest request, Map<String,Object> resultMap, @PathVariable Integer schoolId){
+        //获取当前登录用户
+        User user = (User) request.getSession().getAttribute("user");
+        //根据ID获取学校信息
+        School school = schoolService.findSchoolById(schoolId);
+        //获取学校图片,并且把图片换成能访问的OSS url
+        String schoolMainImg = "";
+        Map<String,String> schoolImgMap = new HashedMap();
+        if(school.getImage()!=null && !"".equals(school.getImage())){
+            String image = school.getImage();
+            List<String> imageList = Arrays.asList(image.split(","));
+            //第一张图片设置为主图,其他的图片为页面图片列表的图片
+            for(String imageName : imageList){
+                if(imageList.get(0).equals(imageName)){
+                    schoolMainImg = fileUploadUtils.getFileUrl(imageName,1000*60*60*3,Constant.OSS_STYLE_SCHOOL_MAIN);
+                }else{
+                    schoolImgMap.put(imageName,fileUploadUtils.getFileUrl(imageName,1000*60*60*3));
+                }
+            }
+        }
+        resultMap.put("user",user);
+        resultMap.put("school",school);
+        resultMap.put("schoolMainImg",schoolMainImg);
+        resultMap.put("schoolImgMap",schoolImgMap);
+        return "school/school";
+    }
+
+    /**
+     * 跳转到编辑课程页面
+     * @return
+     */
+    @GetMapping("/edit_lesson_page")
+    @PreAuthorize("isAuthenticated()")
+    public String schoolEditLessonPage(HttpServletRequest request, Map<String,Object> resultMap){
+        User user = (User) request.getSession().getAttribute("user");
+        resultMap.put("user",user);
+        return "school/school_edit_lesson";
+    }
+
+    /**
+     * 跳转到编辑教师页面
+     * @return
+     */
+    @GetMapping("/edit_teacher_page")
+    @PreAuthorize("isAuthenticated()")
+    public String schoolEditTeacherPage(HttpServletRequest request, Map<String,Object> resultMap){
+        User user = (User) request.getSession().getAttribute("user");
+        resultMap.put("user",user);
+        return "school/school_edit_teacher";
     }
 }

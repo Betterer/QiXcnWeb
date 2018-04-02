@@ -27,9 +27,11 @@ public class Constant {
 
 
     //阿里云OSS访问样式
-    public static final String OSS_STYLE_HEAD_SMALL="style/head_small";       //用户头像(小)
-    public static final String OSS_STYLE_HEAD_MID="style/head_mid";       //用户头像(中)
-    public static final String OSS_STYLE_HEAD_BIG="style/head_big";       //用户头像(大)
-    public static final String OSS_STYLE_DROPZONE="style/dropzone";       //dropzone预览
+    public static final String OSS_STYLE_HEAD_SMALL="style/head_small";             //用户头像(小)
+    public static final String OSS_STYLE_HEAD_MID="style/head_mid";                 //用户头像(中)
+    public static final String OSS_STYLE_HEAD_BIG="style/head_big";                 //用户头像(大)
+    public static final String OSS_STYLE_DROPZONE="style/dropzone";                 //dropzone预览
+    public static final String OSS_STYLE_SCHOOL_MAIN = "style/school_main";         //学校详情页面主图样式
+    public static final String OSS_STYLE_SCHOOL_IMG_LIST = "style/school_img_list"; //学校详情页面图片列表样式
 
 }

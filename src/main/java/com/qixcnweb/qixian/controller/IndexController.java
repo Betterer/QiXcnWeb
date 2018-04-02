@@ -107,15 +107,6 @@ public class IndexController {
        return testFeignClient.sendEmail();
     }
 
-    /**
-     * 测试eureka远程调用,发送邮件
-     * @return
-     */
-    @GetMapping("/test")
-    @ResponseBody
-    public String testEmail(){
-        return testFeignClient.testEmail();
-    }
 
     /**
      * 跳转到系统页面:个人设置

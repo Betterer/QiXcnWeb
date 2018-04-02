@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @FeignClient(name = "qixian-mail")
 public interface TestFeignClient {
+
     @RequestMapping(value = "/email/send_email")
-    public String sendEmail();
+    String sendEmail();
 
     @RequestMapping(value = "/email/test")
     String testEmail();

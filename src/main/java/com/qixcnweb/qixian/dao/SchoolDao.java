@@ -23,4 +23,5 @@ public interface SchoolDao extends CrudRepository<School, Long> {
 
     School findSchoolByUserId(Integer userId);
 
+    School findSchoolById(Integer schoolId);
 }

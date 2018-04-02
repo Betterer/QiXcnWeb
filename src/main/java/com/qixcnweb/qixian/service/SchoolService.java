@@ -75,4 +75,14 @@ public class SchoolService {
         School school = schoolDao.findSchoolByUserId(userId);
         return school;
     }
+
+    /**
+     * 根据学校ID查询学校信息
+     * @param schoolId
+     * @return
+     */
+    public School findSchoolById(Integer schoolId) {
+        School school = schoolDao.findSchoolById(schoolId);
+        return school;
+    }
 }

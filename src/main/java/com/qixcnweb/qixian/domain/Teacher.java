@@ -26,6 +26,13 @@ public class Teacher implements Serializable {
     @Column(name = "introduce")
     private String introduce;
 
+    @Column(name = "recommend")
+    private Integer recommend;          //是否推荐:0:否,1:是,推荐教师将显示在学校页面
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "school_id")
+    private School school;      //关联学校
+
     public Integer getId() {
         return id;
     }
@@ -56,5 +63,21 @@ public class Teacher implements Serializable {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+    public Integer getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(Integer recommend) {
+        this.recommend = recommend;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 }

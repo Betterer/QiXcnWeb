@@ -102,20 +102,22 @@ public class FileUploadUtils {
      * @return
      */
     public String getFileUrl(String fileName,Integer overtime, String style){
-        // 创建OSSClient实例
-        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-        //设置访问过期时间
-        Date date = new Date(new Date().getTime() + overtime);
-        //request中添加样式和到期时间
-        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fileName);
-        request.setProcess(style);
-        request.setExpiration(date);
-        //获取访问url
-        URL url = ossClient.generatePresignedUrl(request);
-        // 关闭client
-        ossClient.shutdown();
-        return url.toString();
+        if(fileName!=null && !"".equals(fileName)){
+            // 创建OSSClient实例
+            OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+            //设置访问过期时间
+            Date date = new Date(new Date().getTime() + overtime);
+            //request中添加样式和到期时间
+            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fileName);
+            request.setProcess(style);
+            request.setExpiration(date);
+            //获取访问url
+            URL url = ossClient.generatePresignedUrl(request);
+            // 关闭client
+            ossClient.shutdown();
+            return url.toString();
+        }else{
+            return "";
+        }
     }
-
-
 }

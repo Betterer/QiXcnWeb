@@ -60,6 +60,13 @@ public class School implements Serializable {
     @Column(name = "status")
     private Integer status;
 
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, mappedBy = "school")
+    private List<Teacher> teacherList;      //关联老师
+
+
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, mappedBy = "school")
+    private List<Lesson> lessonList;                //关联课程
+
     @Transient
     private String managerIdentityImageUrl;         //学校负责人的身份证图片访问url
 
@@ -71,8 +78,7 @@ public class School implements Serializable {
 
 
 
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "school")
-    private List<Lesson> lessonList;                //关联课程
+
 
 
     public Integer getId() {
@@ -177,6 +183,14 @@ public class School implements Serializable {
 
     public void setLicense(String license) {
         this.license = license;
+    }
+
+    public List<Teacher> getTeacherList() {
+        return teacherList;
+    }
+
+    public void setTeacherList(List<Teacher> teacherList) {
+        this.teacherList = teacherList;
     }
 
     public List<Lesson> getLessonList() {

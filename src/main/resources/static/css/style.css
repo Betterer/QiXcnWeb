@@ -43,6 +43,15 @@ body a:hover{
 	-ms-background-size:cover;
 	min-height:900px;
 }
+.banner_child{
+	background:url(../images/banner.jpg) no-repeat 0px 0px;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	-ms-background-size:cover;
+	min-height:250px;
+}
 .banner_top {
     margin: 2em 0 3em;
 }
@@ -983,7 +992,7 @@ h2.resp-accordion {
 	display: none;
 }
 .resp-tab-content {
-	display: none;
+	display: block;
 }
 .resp-content-active, .resp-accordion-active {
    display: block;
@@ -2784,4 +2793,67 @@ ul.wmuSliderPagination {
 	.testimonials-grid1 h4 {
 		font-size: 1.1em;
 	}
+}
+
+/** 新增加的样式 **/
+.school_edit_a{
+	font-size: 2em;
+	color: #9d9d9d;
+}
+
+.school_edit_a:hover{
+	font-size: 2em;
+	color: #83BFA6;
+}
+
+.school_edit{
+	display:block;
+	margin-top: 120px;
+}
+
+.school_edit label{
+	font-size: 2em;
+	color: #9d9d9d;
+	line-height: 23px;
+}
+
+.school_edit input[type="text"],textarea{
+	width: 60%;
+	height: 30px;
+	line-height: 30px;
+	border: none;
+	border-bottom: 1px solid #bbbbbb;
+}
+
+.school_edit .school_edit_radio{
+	display:inline;
+	margin-right: 30px;
+	font-size: 18px;
+	line-height: 30px;
+}
+
+.school_edit .school_edit_radio input[type="radio"]{
+	width:20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+
+.school_edit .confirm_preview{
+	font-size: 1.5em;
+	color: #87CEFA;
+}
+
+.school_edit .confirm_add{
+	font-size: 1.5em;
+	color: #EE3A8C;
+}
+
+.school_edit a i{
+	margin-right:10px;
+}
+
+.school_edit a:hover{
+	font-size: 1.5em;
+	color: #83BFA6;
 }
