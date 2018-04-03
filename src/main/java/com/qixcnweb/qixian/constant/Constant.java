@@ -9,6 +9,14 @@ public class Constant {
     public static final Integer USER_STATUS_NORMAL = 1;
     public static final Integer USER_STATUS_DELETE = 0;
 
+    //教师状态
+    public static final Integer TEACHER_STATUS_NORMAL = 1;
+    public static final Integer TEACHER_STATUS_DELETE = 0;
+
+    //是否推荐教师
+    public static final Integer TEACHER_RECOMMEND = 1;
+    public static final Integer TEACHER_UN_RECOMMEND = 0;
+
 
     //用户类型
     public static final Integer SCHOOL_ADMIN = 3;         //学校法人

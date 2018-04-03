@@ -1,10 +1,12 @@
 package com.qixcnweb.qixian.service;
 
+import com.qixcnweb.qixian.constant.Constant;
 import com.qixcnweb.qixian.dao.TeacherDao;
 import com.qixcnweb.qixian.domain.Teacher;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -32,6 +34,16 @@ public class TeacherService {
      */
     public List<Teacher> findTeacherBySchoolId(Integer schoolId){
         List<Teacher> teacherList = teacherDao.findTeacherBySchoolId(schoolId);
+        return teacherList;
+    }
+
+    /**
+     * 根据学校ID查询教师,状态正常的
+     * @param schoolId
+     * @return
+     */
+    public List<Teacher> findTeacherBySchoolIdAndStatus(Integer schoolId, Integer status){
+        List<Teacher> teacherList = teacherDao.findTeacherBySchoolIdAndStatus(schoolId,status);
         return teacherList;
     }
 

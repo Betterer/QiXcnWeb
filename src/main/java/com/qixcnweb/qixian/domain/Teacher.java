@@ -33,6 +33,9 @@ public class Teacher implements Serializable {
     @JoinColumn(name = "school_id")
     private School school;      //关联学校
 
+    @Column(name = "status")
+    private Integer status;
+
     @Transient
     private String imageUrl;                //可访问的教师图片OSS url地址
 
@@ -82,6 +85,14 @@ public class Teacher implements Serializable {
 
     public void setRecommend(Integer recommend) {
         this.recommend = recommend;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public School getSchool() {

@@ -1,7 +1,9 @@
 <#import "../common/template.ftl" as template>
     <@template.head title="起线科技--学校详情">
+    <link rel="stylesheet" type="text/css" href="${template.base}/css/sweetalert2.min.css">
     <link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="${template.base}/css/responsive.css" rel="stylesheet" type="text/css" />
+    <script src="${template.base}/js/common/sweetalert2.min.js"></script>
     </@template.head>
 
 <@template.body>
@@ -35,7 +37,7 @@
                         <a href="javascript:void(0);" class="teacher_update_btn teacher_edit_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
                             <i class="glyphicon glyphicon-pencil"></i>编辑
                         </a>
-                        <a href="javascript:void(0);" class="teacher_delete_btn teacher_edit_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
+                        <a href="javascript:void(0);" class="teacher_delete_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
                             <i class="glyphicon glyphicon-remove"></i>删除
                         </a>
                     </div>
