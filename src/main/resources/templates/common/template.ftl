@@ -30,6 +30,7 @@
         <#macro body>
             <body>
             <#nested>
+            <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 0;"></span>To Top</a>
             </body>
             </html>
         </#macro>

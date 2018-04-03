@@ -33,5 +33,6 @@ public class Constant {
     public static final String OSS_STYLE_DROPZONE="style/dropzone";                 //dropzone预览
     public static final String OSS_STYLE_SCHOOL_MAIN = "style/school_main";         //学校详情页面主图样式
     public static final String OSS_STYLE_SCHOOL_IMG_LIST = "style/school_img_list"; //学校详情页面图片列表样式
+    public static final String OSS_STYLE_TEACHER_IMAGE = "style/teacher_image";     //教师图片格式 150*150
 
 }

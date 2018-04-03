@@ -1,7 +1,8 @@
 <#import "../common/template.ftl" as template>
     <@template.head title="起线科技--学校详情">
     <link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
-</@template.head>
+    <link href="${template.base}/css/responsive.css" rel="stylesheet" type="text/css" />
+    </@template.head>
 
 <@template.body>
 <!-- banner -->
@@ -16,66 +17,63 @@
 </div>
 <!-- //banner -->
 
-<!-- 编辑教师表单 -->
+
+<!--教师列表-->
+<#if teacherList?? && (teacherList?size>0)>
 <div class="portfolio">
     <div class="container">
-        <h3>编辑教师信息</h3>
-        <div class="portfolio-grids">
-            <form action="${template.base}/edit_teacher" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <div class="school_edit">
-                    <div class="col-md-5 text-right">
-                        <label for="name">教师名称:</label>
+        <h3>教师列表</h3>
+        <#list teacherList as teacher>
+            <div class="col-md-6 testimonials-grid edit_info">
+                <div class="col-md-4 testimonials-grd-right">
+                    <#if teacher.image??>
+                        <img src="${teacher.image}" alt=" " class="img-responsive">
+                    <#else>
+                        <img src="${template.base}/images/default_user.png" alt=" " class="img-responsive">
+                    </#if>
+                    <div class="edit_btns text-center">
+                        <a href="javascript:void(0);" class="teacher_update_btn teacher_edit_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
+                            <i class="glyphicon glyphicon-pencil"></i>编辑
+                        </a>
+                        <a href="javascript:void(0);" class="teacher_delete_btn teacher_edit_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
+                            <i class="glyphicon glyphicon-remove"></i>删除
+                        </a>
                     </div>
-                    <div class="col-md-7">
-                        <input type="text" name="name" id="name"/>
-                    </div>
-                    <div class="clearfix"></div>
                 </div>
-
-
-                <div class="school_edit">
-                    <div class="col-md-5 text-right">
-                        <label for="introduce" style="font-size: 2em; color: #9d9d9d; line-height: 23px;">教师简介:</label>
+                <div class="col-md-8 testimonials-grd">
+                    <div class="testimonials-grid1 testimonials-grid1-second">
+                        <h4>${teacher.name}</h4>
+                        <p>${teacher.introduce}</p>
                     </div>
-                    <div class="col-md-7">
-                        <textarea name="introduce" id="introduce"></textarea>
-                    </div>
-                    <div class="clearfix"></div>
                 </div>
-
-                <div class="school_edit">
-                    <div class="col-md-5 text-right">
-                        <label style="font-size: 2em; color: #9d9d9d; line-height: 23px;">是否推荐:</label>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="school_edit_radio">
-                            <input type="radio" name="recommend" value="1">是
-                        </div>
-                        <div class="school_edit_radio">
-                            <input type="radio" name="recommend" value="0">否
-                        </div>
-                        <div class="school_edit_radio" style="color: #9d9d9d; font-size: 14px;">
-                           (此选项将决定该教师是否在学校页面展示)
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="school_edit">
-                    <div class="col-md-6 text-right">
-                        <a href="javascript:void(0);" class="confirm_preview" id="confirm_preview"><i class="glyphicon glyphicon-open"></i>提交</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="javascript:void(0);" class="confirm_add" id="confirm_add" style="margin-left: 30px;"><i class="glyphicon glyphicon-plus"></i>提交并继续新增</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-            </form>
-        </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="cleanfix"></div>
+        </#list>
     </div>
 </div>
-<!-- //编辑教师表单 -->
+</#if>
+
+<!-- //教师列表 -->
+
+<!-- 添加教师信息-->
+<div class="portfolio">
+    <div class="container text-center">
+        <button type="button" class="btn btn-primary teacher_edit_btn" data-teacher="0" data-school="${schoolId}">
+            点击添加新教师
+        </button>
+    </div>
+</div>
+<!-- //添加教师信息-->
+
+<!-- 弹出框 -->
+<div class="modal" id="editTeacherModal" tabindex="-1" role="dialog" aria-labelledby="editTeacherModal">
+
+</div>
+<!-- //弹出框 -->
+
+
+<script type="text/javascript" src="${template.base}/js/school/school_edit.js"></script>
+
 
 </@template.body>

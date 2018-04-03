@@ -33,6 +33,17 @@ public class Teacher implements Serializable {
     @JoinColumn(name = "school_id")
     private School school;      //关联学校
 
+    @Transient
+    private String imageUrl;                //可访问的教师图片OSS url地址
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -2818,10 +2818,13 @@ ul.wmuSliderPagination {
 }
 
 .school_edit input[type="text"],textarea{
-	width: 60%;
+	width: 50%;
 	height: 30px;
 	line-height: 30px;
 	border: none;
+	outline: none;
+	font-size: 1.5em;
+	color: #9d9d9d;
 	border-bottom: 1px solid #bbbbbb;
 }
 
@@ -2838,22 +2841,33 @@ ul.wmuSliderPagination {
 	margin-right: 8px;
 }
 
-
-.school_edit .confirm_preview{
-	font-size: 1.5em;
-	color: #87CEFA;
+.edit_info{
+	display: block;
+	height: 180px;
+	margin-top: 80px;
 }
 
-.school_edit .confirm_add{
-	font-size: 1.5em;
-	color: #EE3A8C;
+.edit_btns{
+	margin-top: 10px;
+	display: none;
 }
 
-.school_edit a i{
-	margin-right:10px;
+.edit_btns .teacher_update_btn{
+	color: #9d9d9d;
+	margin-right: 10px;
 }
 
-.school_edit a:hover{
-	font-size: 1.5em;
-	color: #83BFA6;
+.edit_btns .teacher_update_btn i{
+	color: #4cae4c;
+	margin-right: 5px;
+}
+
+.edit_btns .teacher_delete_btn{
+	color: #9d9d9d;
+	margin-right: 20px;
+}
+
+.edit_btns .teacher_delete_btn i{
+	color: #c9302c;
+	margin-right: 5px;
 }

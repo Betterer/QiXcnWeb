@@ -5,6 +5,7 @@
     <script type="text/javascript" src="${template.base}/js/index/move-top.js"></script>
     <script type="text/javascript" src="${template.base}/js/index/easing.js"></script>
     <script type="text/javascript" src="${template.base}/js/school/jquery.chocolat.js"></script>
+    <script type="text/javascript" src="${template.base}/js/school/jquery.wmuSlider.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(function() {
             $('.img-top a').Chocolat();
@@ -39,10 +40,10 @@
     <div class="container">
         <div class="about-grids">
             <div class="col-md-6 text-center">
-                <a href="${template.base}/school/edit_lesson_page" target="_blank" class="school_edit_a"><i class="glyphicon glyphicon-book" aria-hidden="true"></i>&nbsp;&nbsp;编辑课程信息</a>
+                <a href="${template.base}/school/edit_lesson_page/${school.id}" target="_blank" class="school_edit_a"><i class="glyphicon glyphicon-book" aria-hidden="true"></i>&nbsp;&nbsp;编辑课程信息</a>
             </div>
             <div class="col-md-6 text-center">
-                <a href="${template.base}/school/edit_teacher_page" target="_blank" class="school_edit_a"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;编辑教师信息</a>
+                <a href="${template.base}/school/edit_teacher_page/${school.id}" target="_blank" class="school_edit_a"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;编辑教师信息</a>
             </div>
         </div>
     </div>
@@ -243,78 +244,34 @@
         <div class="my-trip">
             <div class="wmuSlider example1" style="height: 284px;">
                 <div class="wmuSliderWrapper">
-                    <article style="position: absolute; width: 100%; opacity: 0;">
-                        <div class="banner-wrap">
-                            <div class="my-trip-grids">
-                                <div class="col-xs-4 my-trip-left">
-                                    <h3>About <span>My</span> Trip. (Alaska)</h3>
-                                </div>
-                                <div class="col-xs-8 my-trip-right">
-                                    <div class="my-trip-rightl">
-                                        <img src="images/20.jpg" alt=" " class="img-responsive">
+                    <#list school.teacherList as teacher>
+                        <article>
+                            <div class="banner-wrap">
+                                <div class="my-trip-grids">
+                                    <div class="col-xs-4 my-trip-left">
+                                        <h3>About <span>My</span> Trip. (Alaska)</h3>
                                     </div>
-                                    <div class="my-trip-rightr">
-                                        <p>To take a trivial example, which of us ever undertakes
-                                            laborious physical exercise, except to obtain some advantage
-                                            from it? But who has any right to find fault with a man who chooses
-                                            to enjoy a pleasure that has no annoying consequences.
-                                            <span>Andrew Rich</span></p>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article style="position: absolute; width: 100%; opacity: 0;">
-                        <div class="banner-wrap">
-                            <div class="my-trip-grids">
-                                <div class="col-xs-4 my-trip-left">
-                                    <h3>About <span>My</span> Trip. (Alaska)</h3>
-                                </div>
-                                <div class="col-xs-8 my-trip-right">
-                                    <div class="my-trip-rightl">
-                                        <img src="images/22.jpg" alt=" " class="img-responsive">
-                                    </div>
-                                    <div class="my-trip-rightr">
-                                        <p>To take a trivial example, which of us ever undertakes
-                                            laborious physical exercise, except to obtain some advantage
-                                            from it? But who has any right to find fault with a man who chooses
-                                            to enjoy a pleasure that has no annoying consequences.
-                                            <span>Laura James</span></p>
+                                    <div class="col-xs-8 my-trip-right">
+                                        <div class="my-trip-rightl">
+                                            <#if teacher.imageUrl?? && teacher.imageUrl!=''>
+                                                <img src="${teacher.imageUrl}" alt=" " class="img-responsive">
+                                            <#else>
+                                                <img src="${template.base}/images/default_user.png" alt=" " class="img-responsive">
+                                            </#if>
+                                        </div>
+                                        <div class="my-trip-rightr">
+                                            <p>${teacher.introduce}
+                                                <span>${teacher.name}</span></p>
+                                        </div>
+                                        <div class="clearfix"> </div>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
-                                <div class="clearfix"> </div>
                             </div>
-                        </div>
-                    </article>
-                    <article style="position: relative; width: 100%; opacity: 1;">
-                        <div class="banner-wrap">
-                            <div class="my-trip-grids">
-                                <div class="col-xs-4 my-trip-left">
-                                    <h3>About <span>My</span> Trip. (Alaska)</h3>
-                                </div>
-                                <div class="col-xs-8 my-trip-right">
-                                    <div class="my-trip-rightl">
-                                        <img src="images/21.jpg" alt=" " class="img-responsive">
-                                    </div>
-                                    <div class="my-trip-rightr">
-                                        <p>To take a trivial example, which of us ever undertakes
-                                            laborious physical exercise, except to obtain some advantage
-                                            from it? But who has any right to find fault with a man who chooses
-                                            to enjoy a pleasure that has no annoying consequences.
-                                            <span>Micheal Smith</span></p>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
-                    </article>
+                        </article>
+                    </#list>
                 </div>
                 <ul class="wmuSliderPagination"><li><a href="#" class="">0</a></li><li><a href="#" class="">1</a></li><li><a href="#" class="wmuActive">2</a></li></ul></div>
-            <script src="js/jquery.wmuSlider.js"></script>
             <script>
                 $('.example1').wmuSlider();
             </script>
