@@ -1,15 +1,9 @@
 package com.qixcnweb.qixian.controller;
 
 import com.qixcnweb.qixian.constant.Constant;
-import com.qixcnweb.qixian.domain.Lesson;
-import com.qixcnweb.qixian.domain.School;
-import com.qixcnweb.qixian.domain.Teacher;
-import com.qixcnweb.qixian.domain.User;
+import com.qixcnweb.qixian.domain.*;
 import com.qixcnweb.qixian.remote.RabbitFeignClient;
-import com.qixcnweb.qixian.service.LessonServicer;
-import com.qixcnweb.qixian.service.SchoolService;
-import com.qixcnweb.qixian.service.TeacherService;
-import com.qixcnweb.qixian.service.UserService;
+import com.qixcnweb.qixian.service.*;
 import com.qixcnweb.qixian.utils.FileUploadUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,6 +44,9 @@ public class SchoolController {
 
     @Resource
     private LessonServicer lessonServicer;
+
+    @Resource
+    private CategoryService categoryService;
 
 
     /**
@@ -178,21 +175,6 @@ public class SchoolController {
         return "school/school";
     }
 
-    /**
-     * 跳转到编辑课程页面
-     * @return
-     */
-    @GetMapping("/edit_lesson_page/{schoolId}")
-    @PreAuthorize("isAuthenticated()")
-    public String schoolEditLessonPage(HttpServletRequest request, Map<String,Object> resultMap,@PathVariable Integer schoolId){
-        //获取当前用户
-        User user = (User) request.getSession().getAttribute("user");
-        //根据学校ID查询学校中的课程
-        List<Lesson> lessonBySchoolId = lessonServicer.findLessonBySchoolId(schoolId);
-        resultMap.put("user",user);
-        resultMap.put("schoolId",schoolId);
-        return "school/school_edit_lesson";
-    }
 
     /**
      * 跳转到编辑教师页面
@@ -203,19 +185,25 @@ public class SchoolController {
     public String schoolEditTeacherPage(HttpServletRequest request, Map<String,Object> resultMap,@PathVariable Integer schoolId){
         //获取当前用户
         User user = (User) request.getSession().getAttribute("user");
-        //根据学校ID查询该学校中的教师,状态可用的
-        List<Teacher> teacherList = teacherService.findTeacherBySchoolIdAndStatus(schoolId,Constant.TEACHER_STATUS_NORMAL);
-        //循环教师列表,将每个教师的image替换成可访问的url
-        for(Teacher teacher: teacherList){
-            if(teacher.getImage()!=null && !"".equals(teacher.getImage())){
-                teacher.setImage(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60*3,Constant.OSS_STYLE_TEACHER_IMAGE));
+        //根据学校ID查询学校信息
+        School school = schoolService.findSchoolById(schoolId);
+        //如果当前用户是学校的管理员
+        if(school.getUser().getId().equals(user.getId())){
+            //根据学校ID查询该学校中的教师,状态可用的
+            List<Teacher> teacherList = teacherService.findTeacherBySchoolIdAndStatus(schoolId,Constant.TEACHER_STATUS_NORMAL);
+            //循环教师列表,将每个教师的image替换成可访问的url
+            for(Teacher teacher: teacherList){
+                if(teacher.getImage()!=null && !"".equals(teacher.getImage())){
+                    teacher.setImage(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60*3,Constant.OSS_STYLE_TEACHER_IMAGE));
+                }
             }
+            resultMap.put("user",user);
+            resultMap.put("schoolId",schoolId);
+            resultMap.put("teacherList",teacherList);
+            return "school/school_edit_teacher";
+        }else{
+            return "errorpage/403";
         }
-
-        resultMap.put("user",user);
-        resultMap.put("schoolId",schoolId);
-        resultMap.put("teacherList",teacherList);
-        return "school/school_edit_teacher";
     }
 
 
@@ -243,18 +231,19 @@ public class SchoolController {
     /**
      * 编辑教师信息
      * @param teacher
-     * @param schoolBindResult
+     * @param bindResult
      * @param request
      * @return
      */
     @PostMapping("/edit_teacher")
     @PreAuthorize("isAuthenticated()")
-    public String editTeacher(@Valid Integer schoolId,@Valid Teacher teacher, BindingResult schoolBindResult, HttpServletRequest request){
+    public String editTeacher(@Valid Integer schoolId,@Valid Teacher teacher, BindingResult bindResult, HttpServletRequest request){
         //获取当前用户
         User user = (User) request.getAttribute("user");
-        if(!schoolBindResult.hasErrors()){
+        if(!bindResult.hasErrors()){
             School school = schoolService.findSchoolById(schoolId);
-            if(school.getUser().getId() == user.getId()){
+            //如果当前用户是学校管理员
+            if(school.getUser().getId().equals(user.getId())){
                 teacher.setSchool(school);
                 teacher.setStatus(Constant.TEACHER_STATUS_NORMAL);
                 teacherService.saveTeacher(teacher);
@@ -279,6 +268,7 @@ public class SchoolController {
         User user = (User) request.getSession().getAttribute("user");
         School school = schoolService.findSchoolById(schoolId);
         Teacher teacher = teacherService.findTeacherById(teacherId);
+        //如果当前用户是学校管理员
         if(school.getUser().getId().equals(user.getId())){
             teacher.setStatus(Constant.TEACHER_STATUS_DELETE);
             teacherService.saveTeacher(teacher);
@@ -288,4 +278,105 @@ public class SchoolController {
         return map;
     }
 
+    /**
+     * 跳转到编辑课程页面
+     * @return
+     */
+    @GetMapping("/edit_lesson_page/{schoolId}")
+    @PreAuthorize("isAuthenticated()")
+    public String schoolEditLessonPage(HttpServletRequest request, Map<String,Object> resultMap,@PathVariable Integer schoolId){
+        //获取当前用户
+        User user = (User) request.getSession().getAttribute("user");
+        //根据学校ID查询学校信息
+        School school = schoolService.findSchoolById(schoolId);
+        //如果当前用户是学校管理员
+        if(school.getUser().getId().equals(user.getId())){
+            //根据学校ID查询学校中的课程
+            List<Lesson> lessonList = lessonServicer.findLessonBySchoolIdAndStatus(schoolId,Constant.LESSON_STATUS_NORMAL);
+            //循环课程,将课程图片转换成可访问的OSS url
+            for(Lesson lesson : lessonList){
+                if(lesson.getImage()!=null && !"".equals(lesson.getImage())){
+                    lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_TEACHER_IMAGE));
+                }
+            }
+            resultMap.put("user",user);
+            resultMap.put("schoolId",schoolId);
+            resultMap.put("lessonList",lessonList);
+            return "school/school_edit_lesson";
+
+        }else{
+            return "errorpage/403";
+        }
+    }
+
+    /**
+     * 加载编辑课程信息的弹出框
+     * @param lessonId
+     * @return
+     */
+    @GetMapping("/load_edit_lesson_modal/{lessonId}/{schoolId}")
+    public String loadEditLessonModal(Map<String,Object> resultMap,@PathVariable Integer lessonId,@PathVariable Integer schoolId){
+        Lesson lesson = new Lesson();
+        if(lessonId!=0){
+            //根据ID查询到课程信息
+            lesson = lessonServicer.findLessonById(lessonId);
+            //将课程的图片转换成可以访问的格式
+            lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_LESSON_IMAGE));
+        }
+        //根据学校ID查询该学校老师
+        List<Teacher> teacherList = teacherService.findTeacherBySchoolIdAndStatus(schoolId, Constant.TEACHER_STATUS_NORMAL);
+        //将教师的图片转换成可以访问的格式
+        for(Teacher teacher:teacherList){
+            teacher.setImageUrl(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60*3,Constant.OSS_STYLE_HEAD_MID));
+        }
+        //查询所有的培训类别
+        List<Category> categoryList = categoryService.findAllByLevel(Constant.CATEGORY_LEVEL_1);
+
+
+        resultMap.put("lesson",lesson);
+        resultMap.put("schoolId",schoolId);
+        resultMap.put("teacherList",teacherList);
+        resultMap.put("categoryList",categoryList);
+
+        return "school/edit_lesson_modal";
+    }
+
+    /**
+     * 编辑教师信息
+     * @param lesson
+     * @param bindResult
+     * @param request
+     * @return
+     */
+    @PostMapping("/edit_lesson")
+    @PreAuthorize("isAuthenticated()")
+    public String editLesson(@Valid Integer schoolId,@Valid Integer categoryId,@Valid String teacherIds,
+                             @Valid Lesson lesson, BindingResult bindResult, HttpServletRequest request){
+        //获取当前用户
+        User user = (User) request.getSession().getAttribute("user");
+        if(!bindResult.hasErrors()){
+            School school = schoolService.findSchoolById(schoolId);
+            //如果当前用户是学校管理员
+            if(school.getUser().getId().equals(user.getId())){
+                //课程关联学校
+                lesson.setSchool(school);
+                //课程关联类目
+                if(categoryId!=null && !"".equals(categoryId)){
+                    Category category = categoryService.findCategoryById(categoryId);
+                    lesson.setCategory(category);
+                }
+                //课程关联老师
+                if(teacherIds!=null && !"".equals(teacherIds)){
+                    List<String> idList = Arrays.asList(teacherIds.split(","));
+                    List<Teacher> teacherList = teacherService.findTeacherByIds(idList);
+                    lesson.setTeacherList(teacherList);
+                }
+                //默认状态是1:正常
+                lesson.setStatus(Constant.LESSON_STATUS_NORMAL);
+                //保存
+                lessonServicer.saveLesson(lesson);
+            }
+        }
+        return "redirect:/school/edit_lesson_page/"+schoolId;
+    }
 }

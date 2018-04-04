@@ -2,18 +2,7 @@
  * Created by dingxiaochi on 2018/4/3.
  */
 
-/**
- * 鼠标滑过 edit_info 显示编辑按钮
- */
-
-$(".edit_info").on('mouseover',function(){
-    $(this).find('.edit_btns').show();
-});
-
-$(".edit_info").on('mouseout',function(){
-    $(this).find('.edit_btns').hide();
-});
-
+/*************************************************  编辑教师 ***********************************************************/
 
 /**
  * 点击编辑/增加按钮弹出弹出框, 编辑教师页面使用
@@ -52,5 +41,25 @@ $(".teacher_delete_btn").on('click',function(){
             window.location.reload();
         },'json');
     })
+
+});
+
+
+
+/*************************************************  编辑课程 ***********************************************************/
+
+
+
+/**
+ * 点击编辑/增加按钮弹出弹出框,编辑课程页面使用
+ */
+$(".lesson_edit_btn").on('click',function(){
+    var lessonId = $(this).attr('data-lesson');
+    var schoolId = $(this).attr('data-school');
+    var url = "/school/load_edit_lesson_modal/"+lessonId+"/"+schoolId;
+    $.get(url,function(data){
+        $('#editLessonModal').html(data);
+        $('#editLessonModal').modal('show');
+    },'html');
 
 });

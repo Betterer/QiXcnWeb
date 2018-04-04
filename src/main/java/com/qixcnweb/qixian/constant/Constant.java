@@ -27,6 +27,15 @@ public class Constant {
     public static final Integer SCHOOL_WAITE = 0;           //待审核
     public static final Integer SCHOOL_ABLE = 1;            //审核通过
 
+    //课程状态
+    public static final Integer LESSON_STATUS_DELETE = 0;
+    public static final Integer LESSON_STATUS_NORMAL = 1;
+
+    //类目级别
+    public static final Integer CATEGORY_LEVEL_1 = 1;
+    public static final Integer CATEGORY_LEVEL_2 = 2;
+    public static final Integer CATEGORY_LEVEL_3 = 3;
+
     //阿里云OSS图片存放路径
     public static final String USER_HEAD_IMAGE = "user_head/";      //用户头像目录 OSS服务器存放目录
     public static final String USER_INDENTITY = "user_identity/";    //用户身份证 OSS服务器存放目录
@@ -42,5 +51,7 @@ public class Constant {
     public static final String OSS_STYLE_SCHOOL_MAIN = "style/school_main";         //学校详情页面主图样式
     public static final String OSS_STYLE_SCHOOL_IMG_LIST = "style/school_img_list"; //学校详情页面图片列表样式
     public static final String OSS_STYLE_TEACHER_IMAGE = "style/teacher_image";     //教师图片格式 150*150
+    public static final String OSS_STYLE_LESSON_EDIT = "style/lesson_edit";         //课程编辑图片格式
+    public static final String OSS_STYLE_LESSON_IMAGE = "style/lesson_image";       //课程展示图片格式
 
 }

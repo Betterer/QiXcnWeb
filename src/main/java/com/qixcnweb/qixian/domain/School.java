@@ -39,6 +39,12 @@ public class School implements Serializable {
     @Column( name = "cellphone")
     private String cellphone;
 
+    @Column(name = "QQ")
+    private String QQ;
+
+    @Column(name = "wechat")
+    private String wechat;
+
     @Column( name = "email")
     private String email;
 
@@ -135,6 +141,22 @@ public class School implements Serializable {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public String getQQ() {
+        return QQ;
+    }
+
+    public void setQQ(String QQ) {
+        this.QQ = QQ;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
 
     public String getEmail() {

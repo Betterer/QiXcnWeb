@@ -1,5 +1,5 @@
 <#import "../common/template.ftl" as template>
-    <@template.head title="起线科技--学校详情">
+    <@template.head title="起线科技--编辑教师">
     <link rel="stylesheet" type="text/css" href="${template.base}/css/sweetalert2.min.css">
     <link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="${template.base}/css/responsive.css" rel="stylesheet" type="text/css" />
@@ -35,10 +35,10 @@
                     </#if>
                     <div class="edit_btns text-center">
                         <a href="javascript:void(0);" class="teacher_update_btn teacher_edit_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
-                            <i class="glyphicon glyphicon-pencil"></i>编辑
+                            <i class="fa fa-pencil fa-2"></i>编辑
                         </a>
                         <a href="javascript:void(0);" class="teacher_delete_btn" data-teacher="${teacher.id}" data-school="${schoolId}">
-                            <i class="glyphicon glyphicon-remove"></i>删除
+                            <i class="fa fa-times fa-2"></i>删除
                         </a>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
 <!-- //添加教师信息-->
 
 <!-- 弹出框 -->
-<div class="modal" id="editTeacherModal" tabindex="-1" role="dialog" aria-labelledby="editTeacherModal">
+<div class="modal fade" id="editTeacherModal" tabindex="-1" role="dialog" aria-labelledby="editTeacherModal">
 
 </div>
 <!-- //弹出框 -->

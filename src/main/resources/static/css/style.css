@@ -1180,6 +1180,9 @@ h2.resp-accordion {
     color: #999;
 	margin-right: 2em;
 }
+.artical-links ul li i{
+	margin-right: 5px;
+}
 .artical-links ul li:last-child{
 	float:right;
 }
@@ -2849,7 +2852,6 @@ ul.wmuSliderPagination {
 
 .edit_btns{
 	margin-top: 10px;
-	display: none;
 }
 
 .edit_btns .teacher_update_btn{
@@ -2870,4 +2872,36 @@ ul.wmuSliderPagination {
 .edit_btns .teacher_delete_btn i{
 	color: #c9302c;
 	margin-right: 5px;
+}
+
+.edit_btns .lesson_update_btn{
+	color: #9d9d9d;
+	margin-right: 10px;
+}
+
+.edit_btns .lesson_update_btn i{
+	color: #4cae4c;
+	margin-right: 5px;
+}
+
+.edit_btns .lesson_delete_btn{
+	color: #9d9d9d;
+	margin-right: 20px;
+}
+
+.edit_btns .lesson_delete_btn i{
+	color: #c9302c;
+	margin-right: 5px;
+}
+
+.teacher_select{
+	margin:5px;
+}
+.teacher_select .unchecked_img{
+	border-radius:100px;
+	border: 4px solid #D3D3D3;
+}
+.teacher_select .checked_img{
+	border-radius:100px;
+	border: 4px solid #32CD32;
 }

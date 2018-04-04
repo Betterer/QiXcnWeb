@@ -19,9 +19,12 @@ public interface LessonDao extends CrudRepository<Lesson, Long> {
 
     /** ------------------------------------------------- 查 -------------------------------------------------------- **/
 
-    //根据用户ID查询教师
+    //根据课程ID查询课程
     Lesson findLessonById(Integer teacherId);
 
-    //根据学校ID查询教师
+    //根据学校ID查询课程
     List<Lesson> findLessonBySchoolId(Integer schoolId);
+
+    //根据学校ID和课程状态查询课程
+    List<Lesson> findLessonBySchoolIdAndStatus(Integer schoolId,Integer status);
 }

@@ -9,7 +9,12 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="exampleModalLabel">
-                新增/修改 教师信息
+                <#if teacher.id??>
+                    修改
+                <#else>
+                    新增
+                </#if>
+                教师信息
             </h4>
         </div>
         <div class="modal-body">

@@ -69,6 +69,15 @@
                 <div class="clearfix"></div>
                 <div class="row sys_row">
                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                        <input  name="QQ" id="QQ" type="text" placeholder="QQ号码" value="${school.QQ!''}">
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                        <input  name="wechat" id="wechat" type="text"  placeholder="微信号" value="${school.wechat!''}">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row sys_row">
+                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                         <input  name="webSite" id="webSite" type="text" placeholder="学校网站(例:http://www.baidu.com)" value="${school.webSite!''}">
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">

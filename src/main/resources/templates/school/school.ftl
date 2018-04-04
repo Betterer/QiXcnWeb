@@ -50,45 +50,28 @@
 </div>
 </#if>
 
-
 <!-- 学校简介 -->
-<div class="about">
+<div class="single">
     <div class="container">
-        <div class="about-grids">
-            <div class="col-md-6 about-grid-left">
-                <div class="grid">
-                    <figure class="effect-julia">
-                        <#if schoolMainImg??>
-                            <img src="${schoolMainImg}" alt="" class="img-responsive">
-                        <#else>
-                            <img src="${template.base}/images/school_main_default.jpg" alt="" class="img-responsive">
-                        </#if>
-                        <figcaption>
-                            <h2><span>${school.name}</span></h2>
-                            <div>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 更优质的教学. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 更近的距离. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 更优惠的价格. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                            </div>
-                            <a href="#">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
-            <div class="col-md-6 about-grid-right">
+        <div class="single-page-artical">
+            <div class="artical-content">
                 <h3>${school.name}</h3>
-                <p class="great">让每一个学生都得到发展,让每一个家长都能够满意.</p>
+                <#if schoolMainImg??>
+                    <img src="${schoolMainImg}" alt="" class="img-responsive">
+                <#else>
+                    <img src="${template.base}/images/school_main_default.jpg" alt="" class="img-responsive">
+                </#if>
                 <p>${school.introduce}</p>
-                <div class="social_icons social_icons1">
-                    <ul>
-                        <li><a href="#" class="p"></a></li>
-                        <li><a href="#" class="facebook"></a></li>
-                        <li><a href="#" class="g"></a></li>
-                        <li><a href="#" class="instagram"></a></li>
-                    </ul>
-                </div>
             </div>
-            <div class="clearfix"> </div>
+            <div class="artical-links">
+                <ul>
+                    <li><i class="fa fa-wechat fa-2"></i>${school.wechat!''}</li>
+                    <li><i class="fa fa-qq fa-2"></i> ${school.QQ!''}</a></li>
+                    <li><i class="fa fa-envelope fa-2"></i>${school.email!''}</a></li>
+                    <li><i class="fa fa-phone-square fa-2"></i>${school.telephone!''}</a></li>
+                    <li><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>permalink</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -96,7 +79,7 @@
 
 <!-- 学校图片 -->
 <#if (schoolImgMap??) && (schoolImgMap?size > 0) >
-<div class="portfolio">
+<div class="about testimonials">
     <div class="container">
         <h3>学校环境</h3>
         <div class="portfolio-grids">
@@ -123,7 +106,6 @@
     </div>
 </div>
 </#if>
-
 <!-- //学校图片 -->
 
 <!-- 课程相关 -->
@@ -132,104 +114,29 @@
     <div class="container">
         <h3>开设课程</h3>
         <div class="blog-grids">
-            <div class="col-md-6 blog-grid">
-                <div class="col-xs-4 blog-grid-left">
-                    <a href="single.html"><img src="images/16.jpg" alt=" " class="img-responsive" /></a>
+            <#list school.lessonList as lesson>
+                <div class="col-md-6 blog-grid" style="margin-top: 80px;">
+                    <div class="col-xs-4 blog-grid-left">
+                        <#if lesson.imageUrl??>
+                            <a href="javascript:void(0);"><img src="${lesson.imageUrl}" alt=" " class="img-responsive"></a>
+                        <#else>
+                            <a href="javascript:void(0);"><img src="${template.base}/images/school_main_default.jpg" alt=" " class="img-responsive"></a>
+                        </#if>
+                    </div>
+                    <div class="col-xs-8 blog-grid-right">
+                        <a href="javascript:void(0);">${lesson.name}</a>
+                        <h4>${lesson.price}</h4>
+                        <p>${lesson.introduce}</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <div class="more m1 edit_btns" style="margin-top: 0px;">
+                        <a class="btn effect6" href="single.html">Learn More</a>
+                    </div>
                 </div>
-                <div class="col-xs-8 blog-grid-right">
-                    <a href="single.html">sint occaecat cupidatat non proident</a>
-                    <h4>27 November 2015</h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="clearfix"> </div>
-                <div class="more m1">
-                    <a class="btn effect6" href="single.html">Learn More</a>
-                </div>
-            </div>
-            <div class="col-md-6 blog-grid">
-                <div class="col-xs-4 blog-grid-left">
-                    <a href="single.html"><img src="images/17.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="col-xs-8 blog-grid-right">
-                    <a href="single.html">sint occaecat cupidatat non proident</a>
-                    <h4>28 November 2015</h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="clearfix"> </div>
-                <div class="more m1">
-                    <a class="btn effect6" href="single.html">Learn More</a>
-                </div>
-            </div>
-            <div class="clearfix"> </div>
+            </#list>
+
         </div>
-        <div class="blog-grids">
-            <div class="col-md-6 blog-grid">
-                <div class="col-xs-4 blog-grid-left">
-                    <a href="single.html"><img src="images/18.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="col-xs-8 blog-grid-right">
-                    <a href="single.html">sint occaecat cupidatat non proident</a>
-                    <h4>27 November 2015</h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="clearfix"> </div>
-                <div class="more m1">
-                    <a class="btn effect6" href="single.html">Learn More</a>
-                </div>
-            </div>
-            <div class="col-md-6 blog-grid">
-                <div class="col-xs-4 blog-grid-left">
-                    <a href="single.html"><img src="images/19.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="col-xs-8 blog-grid-right">
-                    <a href="single.html">sint occaecat cupidatat non proident</a>
-                    <h4>28 November 2015</h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="clearfix"> </div>
-                <div class="more m1">
-                    <a class="btn effect6" href="single.html">Learn More</a>
-                </div>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-        <div class="blog-grids">
-            <div class="col-md-6 blog-grid">
-                <div class="col-xs-4 blog-grid-left">
-                    <a href="single.html"><img src="images/16.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="col-xs-8 blog-grid-right">
-                    <a href="single.html">sint occaecat cupidatat non proident</a>
-                    <h4>27 November 2015</h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="clearfix"> </div>
-                <div class="more m1">
-                    <a class="btn effect6" href="single.html">Learn More</a>
-                </div>
-            </div>
-            <div class="col-md-6 blog-grid">
-                <div class="col-xs-4 blog-grid-left">
-                    <a href="single.html"><img src="images/17.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="col-xs-8 blog-grid-right">
-                    <a href="single.html">sint occaecat cupidatat non proident</a>
-                    <h4>28 November 2015</h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="clearfix"> </div>
-                <div class="more m1">
-                    <a class="btn effect6" href="single.html">Learn More</a>
-                </div>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
+
     </div>
 </div>
 </#if>
@@ -238,48 +145,36 @@
 
 <!-- 老师相关 -->
 <#if (school.teacherList??) && (school.teacherList?size>0)>
-<div class="about testimonials">
-    <div class="container">
-        <h3>优秀教师</h3>
-        <div class="my-trip">
-            <div class="wmuSlider example1" style="height: 284px;">
-                <div class="wmuSliderWrapper">
-                    <#list school.teacherList as teacher>
-                        <article>
-                            <div class="banner-wrap">
-                                <div class="my-trip-grids">
-                                    <div class="col-xs-4 my-trip-left">
-                                        <h3>About <span>My</span> Trip. (Alaska)</h3>
-                                    </div>
-                                    <div class="col-xs-8 my-trip-right">
-                                        <div class="my-trip-rightl">
-                                            <#if teacher.imageUrl?? && teacher.imageUrl!=''>
-                                                <img src="${teacher.imageUrl}" alt=" " class="img-responsive">
-                                            <#else>
-                                                <img src="${template.base}/images/default_user.png" alt=" " class="img-responsive">
-                                            </#if>
-                                        </div>
-                                        <div class="my-trip-rightr">
-                                            <p>${teacher.introduce}
-                                                <span>${teacher.name}</span></p>
-                                        </div>
-                                        <div class="clearfix"> </div>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
-                            </div>
-                        </article>
-                    </#list>
+    <div class="about testimonials">
+        <div class="container">
+            <h3>教师列表</h3>
+            <#list school.teacherList as teacher>
+                <div class="col-md-6 testimonials-grid edit_info">
+                    <div class="col-md-4 testimonials-grd-right">
+                        <#if teacher.image??>
+                            <img src="${teacher.imageUrl}" alt=" " class="img-responsive">
+                        <#else>
+                            <img src="${template.base}/images/default_user.png" alt=" " class="img-responsive">
+                        </#if>
+                    </div>
+                    <div class="col-md-8 testimonials-grd">
+                        <div class="testimonials-grid1 testimonials-grid1-second">
+                            <h4>${teacher.name}</h4>
+                            <p>${teacher.introduce}</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
                 </div>
-                <ul class="wmuSliderPagination"><li><a href="#" class="">0</a></li><li><a href="#" class="">1</a></li><li><a href="#" class="wmuActive">2</a></li></ul></div>
-            <script>
-                $('.example1').wmuSlider();
-            </script>
+                <div class="cleanfix"></div>
+            </#list>
         </div>
     </div>
-</div>
 </#if>
 <!-- //老师相关 -->
+
+
+
+
 
 <!-- 联系我们 -->
 <div class="contact" id="contact">

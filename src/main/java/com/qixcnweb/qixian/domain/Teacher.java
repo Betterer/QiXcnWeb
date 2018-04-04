@@ -3,6 +3,7 @@ package com.qixcnweb.qixian.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**教师类
  * Created by dingxiaochi on 2018/3/16.
@@ -32,6 +33,13 @@ public class Teacher implements Serializable {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "school_id")
     private School school;      //关联学校
+
+    @ManyToMany
+    @JoinTable(
+            name="lesson_teacher",
+            joinColumns=@JoinColumn(name="teacher_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="lesson_id", referencedColumnName="id"))
+    private List<Lesson> lessonList;        //关联课程
 
     @Column(name = "status")
     private Integer status;
@@ -93,6 +101,14 @@ public class Teacher implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<Lesson> getLessonList() {
+        return lessonList;
+    }
+
+    public void setLessonList(List<Lesson> lessonList) {
+        this.lessonList = lessonList;
     }
 
     public School getSchool() {

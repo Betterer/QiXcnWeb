@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dingxiaochi on 2018/4/3.
@@ -55,5 +58,24 @@ public class TeacherService {
     public Teacher findTeacherById(Integer teacherId) {
         Teacher teacher = teacherDao.findTeacherById(teacherId);
         return teacher;
+    }
+
+    /**
+     * 根据教师ID列表查询教师
+     * @param ids  教师的id字符串 以","隔开
+     * @return
+     */
+    public List<Teacher> findTeacherByIds(List<String> ids) {
+        //如果字符串以","结尾.
+        List<Integer> idList = new ArrayList<Integer>();
+        for(String id : ids){
+            if(id!=null && !"".equals(id)){
+                idList.add(Integer.parseInt(id));
+            }
+        }
+
+
+        List<Teacher> teacherList = teacherDao.findTeacherByIdIn(idList);
+        return teacherList;
     }
 }
