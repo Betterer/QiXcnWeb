@@ -30,7 +30,7 @@
         <#else>
             <@template.unLoginUser/>
         </#if>
-            <@template.menu/>
+            <@template.menu_school/>
     </div>
 </div>
 <!-- //banner -->
@@ -40,10 +40,10 @@
     <div class="container">
         <div class="about-grids">
             <div class="col-md-6 text-center">
-                <a href="${template.base}/school/edit_lesson_page/${school.id}" target="_blank" class="school_edit_a"><i class="glyphicon glyphicon-book" aria-hidden="true"></i>&nbsp;&nbsp;编辑课程信息</a>
+                <a href="${template.base}/school/edit_lesson_page/${school.id}" class="school_edit_a"><i class="glyphicon glyphicon-book" aria-hidden="true"></i>&nbsp;&nbsp;编辑课程信息</a>
             </div>
             <div class="col-md-6 text-center">
-                <a href="${template.base}/school/edit_teacher_page/${school.id}" target="_blank" class="school_edit_a"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;编辑教师信息</a>
+                <a href="${template.base}/school/edit_teacher_page/${school.id}" class="school_edit_a"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;编辑教师信息</a>
             </div>
         </div>
     </div>
@@ -79,9 +79,9 @@
 
 <!-- 学校图片 -->
 <#if (schoolImgMap??) && (schoolImgMap?size > 0) >
-<div class="about testimonials">
+<div class="blog" id="environment">
     <div class="container">
-        <h3>学校环境</h3>
+        <h3>校园环境</h3>
         <div class="portfolio-grids">
             <div class="sap_tabs">
                 <div class="tab-1 resp-tab-content">
@@ -110,7 +110,7 @@
 
 <!-- 课程相关 -->
 <#if (school.lessonList??) && (school.lessonList?size > 0)>
-<div class="blog">
+<div class="blog"  id="lessons">
     <div class="container">
         <h3>开设课程</h3>
         <div class="blog-grids">
@@ -129,8 +129,8 @@
                         <p>${lesson.introduce}</p>
                     </div>
                     <div class="clearfix"> </div>
-                    <div class="more m1 edit_btns" style="margin-top: 0px;">
-                        <a class="btn effect6" href="single.html">Learn More</a>
+                    <div class="more m1 edit_btns">
+                        <a class="btn effect6" href="single.html">查看详情</a>
                     </div>
                 </div>
             </#list>
@@ -145,9 +145,9 @@
 
 <!-- 老师相关 -->
 <#if (school.teacherList??) && (school.teacherList?size>0)>
-    <div class="about testimonials">
+<div class="blog" id="teachers">
         <div class="container">
-            <h3>教师列表</h3>
+            <h3>师资力量</h3>
             <#list school.teacherList as teacher>
                 <div class="col-md-6 testimonials-grid edit_info">
                     <div class="col-md-4 testimonials-grd-right">
@@ -171,10 +171,6 @@
     </div>
 </#if>
 <!-- //老师相关 -->
-
-
-
-
 
 <!-- 联系我们 -->
 <div class="contact" id="contact">

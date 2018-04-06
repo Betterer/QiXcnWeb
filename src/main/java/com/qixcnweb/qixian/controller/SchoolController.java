@@ -50,6 +50,17 @@ public class SchoolController {
 
 
     /**
+     * 跳转到学校列表页面
+     * @return
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String shcoolList(){
+        return "school/list";
+    }
+
+
+
+    /**
      * 上传学校图片
      * @param file
      * @return
@@ -153,6 +164,22 @@ public class SchoolController {
             }
         }
 
+        //Step2:获取相关课程,并且把课程图片转换成可能访问的url
+        //用于存放状态正常的课程
+        List<Lesson> normalLessonList = new ArrayList<>();
+        //将课程图片转换成能访问的OSS url
+        if(school.getLessonList()!=null){
+            for(Lesson lesson:school.getLessonList()){
+                if(lesson.getStatus()==Constant.LESSON_STATUS_NORMAL){
+                    lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_LESSON_EDIT));
+                    normalLessonList.add(lesson);
+                }
+            }
+        }
+        school.setLessonList(normalLessonList);
+
+
+
         //Step3: 获取推荐的教师,并且把教师图片转换成能访问的URL
         //用于存储推荐教师
         List<Teacher> recommentTeacherList = new ArrayList<>();
@@ -160,7 +187,7 @@ public class SchoolController {
         if(school.getTeacherList()!=null){
             for(Teacher teacher : school.getTeacherList()){
                 if(teacher.getRecommend()==Constant.TEACHER_RECOMMEND && teacher.getStatus()==Constant.TEACHER_STATUS_NORMAL){
-                    teacher.setImageUrl(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60,Constant.OSS_STYLE_TEACHER_IMAGE));
+                    teacher.setImageUrl(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60*3,Constant.OSS_STYLE_TEACHER_IMAGE));
                     recommentTeacherList.add(teacher);
                 }
             }
@@ -296,7 +323,7 @@ public class SchoolController {
             //循环课程,将课程图片转换成可访问的OSS url
             for(Lesson lesson : lessonList){
                 if(lesson.getImage()!=null && !"".equals(lesson.getImage())){
-                    lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_TEACHER_IMAGE));
+                    lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_LESSON_EDIT));
                 }
             }
             resultMap.put("user",user);
@@ -321,21 +348,41 @@ public class SchoolController {
             //根据ID查询到课程信息
             lesson = lessonServicer.findLessonById(lessonId);
             //将课程的图片转换成可以访问的格式
-            lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_LESSON_IMAGE));
+            if(lesson.getImage()!=null && !"".equals(lesson.getImage())){
+                lesson.setImageUrl(fileUploadUtils.getFileUrl(lesson.getImage(),1000*60*60*3,Constant.OSS_STYLE_LESSON_EDIT));
+            }
         }
         //根据学校ID查询该学校老师
         List<Teacher> teacherList = teacherService.findTeacherBySchoolIdAndStatus(schoolId, Constant.TEACHER_STATUS_NORMAL);
         //将教师的图片转换成可以访问的格式
         for(Teacher teacher:teacherList){
-            teacher.setImageUrl(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60*3,Constant.OSS_STYLE_HEAD_MID));
+            if(teacher.getImage()!=null && !"".equals(teacher.getImage())){
+                teacher.setImageUrl(fileUploadUtils.getFileUrl(teacher.getImage(),1000*60*60*3,Constant.OSS_STYLE_HEAD_MID));
+            }
         }
         //查询所有的培训类别
         List<Category> categoryList = categoryService.findAllByLevel(Constant.CATEGORY_LEVEL_1);
+
+        //将课程教师的ID拼凑成一个字符串
+        String teacherIds = "";
+        List teacherIdList = new ArrayList();
+        if(lesson.getTeacherList()!=null){
+            for(Teacher teacher : lesson.getTeacherList()){
+                if(!"".equals(teacherIds)){
+                    teacherIds = teacherIds.concat(","+teacher.getId());
+                }else{
+                    teacherIds = teacherIds.concat(teacher.getId().toString());
+                }
+                teacherIdList.add(teacher.getId());
+            }
+        }
 
 
         resultMap.put("lesson",lesson);
         resultMap.put("schoolId",schoolId);
         resultMap.put("teacherList",teacherList);
+        resultMap.put("teacherIds",teacherIds);
+        resultMap.put("teacherIdList",teacherIdList);
         resultMap.put("categoryList",categoryList);
 
         return "school/edit_lesson_modal";
@@ -378,5 +425,30 @@ public class SchoolController {
             }
         }
         return "redirect:/school/edit_lesson_page/"+schoolId;
+    }
+
+    /**
+     * 删除课程
+     * @param lessonId
+     * @return
+     */
+    @RequestMapping(value = "/delete_lesson/{lessonId}/{schoolId}", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
+    @ResponseBody
+    public Map deleteLesson(@PathVariable Integer lessonId,@PathVariable Integer schoolId, HttpServletRequest request){
+
+        Map<String,Object> map = new HashedMap();
+        //获取当前用户
+        User user = (User) request.getSession().getAttribute("user");
+        School school = schoolService.findSchoolById(schoolId);
+        Lesson lesson = lessonServicer.findLessonById(lessonId);
+        //如果当前用户是学校管理员
+        if(school.getUser().getId().equals(user.getId())){
+            lesson.setStatus(Constant.TEACHER_STATUS_DELETE);
+            lessonServicer.saveLesson(lesson);
+        }
+
+        map.put("status",200);
+        return map;
     }
 }

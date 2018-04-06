@@ -52,6 +52,6 @@ public class Constant {
     public static final String OSS_STYLE_SCHOOL_IMG_LIST = "style/school_img_list"; //学校详情页面图片列表样式
     public static final String OSS_STYLE_TEACHER_IMAGE = "style/teacher_image";     //教师图片格式 150*150
     public static final String OSS_STYLE_LESSON_EDIT = "style/lesson_edit";         //课程编辑图片格式
-    public static final String OSS_STYLE_LESSON_IMAGE = "style/lesson_image";       //课程展示图片格式
+    public static final String OSS_STYLE_LESSON_MAIN = "style/lesson_main";       //课程展示图片格式
 
 }

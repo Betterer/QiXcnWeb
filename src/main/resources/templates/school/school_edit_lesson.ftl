@@ -1,23 +1,9 @@
 <#import "../common/template.ftl" as template>
     <@template.head title="起线科技--编辑课程">
+    <link rel="stylesheet" type="text/css" href="${template.base}/css/sweetalert2.min.css">
     <link href="${template.base}/css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="${template.base}/css/chocolat.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="${template.base}/js/index/move-top.js"></script>
-    <script type="text/javascript" src="${template.base}/js/index/easing.js"></script>
-    <script type="text/javascript" src="${template.base}/js/school/jquery.chocolat.js"></script>
-    <script type="text/javascript" charset="utf-8">
-        $(function() {
-            $('.img-top a').Chocolat();
-        });
-    </script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-        });
-    </script>
+    <link href="${template.base}/css/responsive.css" rel="stylesheet" type="text/css" />
+    <script src="${template.base}/js/common/sweetalert2.min.js"></script>
 </@template.head>
 
 <@template.body>
@@ -54,13 +40,13 @@
                         <p>${lesson.introduce}</p>
                     </div>
                     <div class="clearfix"> </div>
-                    <div class="more m1 edit_btns" style="margin-top: 0px;">
-                    <a href="javascript:void(0);" class="teacher_update_btn teacher_edit_btn" data-lesson="${lesson.id}" data-school="${schoolId}">
-                    <i class="glyphicon glyphicon-pencil"></i>编辑
-                    </a>
-                    <a href="javascript:void(0);" class="teacher_delete_btn" data-lesson="${lesson.id}" data-school="${schoolId}">
-                    <i class="glyphicon glyphicon-remove"></i>删除
-                    </a>
+                    <div class="more m1 edit_btns" style="padding-left:20px;">
+                        <a href="javascript:void(0);" class="lesson_update_btn lesson_edit_btn" data-lesson="${lesson.id}" data-school="${schoolId}">
+                            <i class="fa fa-pencil fa-2"></i>编辑
+                        </a>
+                        <a href="javascript:void(0);" class="lesson_delete_btn" data-lesson="${lesson.id}" data-school="${schoolId}">
+                            <i class="fa fa-times fa-2"></i>删除
+                        </a>
                     </div>
                 </div>
             </#list>
@@ -76,6 +62,10 @@
     <div class="container text-center">
         <button type="button" class="btn btn-primary lesson_edit_btn" data-lesson="0" data-school="${schoolId}">
             点击添加新课程
+        </button>
+
+        <button type="button" class="btn btn-danger edit_back" data-lesson="0" data-school="${schoolId}">
+            返回
         </button>
     </div>
 </div>

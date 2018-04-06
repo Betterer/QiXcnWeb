@@ -100,6 +100,14 @@ $("#editLessonForm").validate({
         name:{
             required:true
         },
+        price:{
+            required:true,
+            number:true
+        },
+        duration:{
+            required:true,
+            digits:true
+        },
         introduce:{
             required:true
         }
@@ -107,6 +115,14 @@ $("#editLessonForm").validate({
     messages:{
         name:{
             required:"请输入课程名称"
+        },
+        price:{
+            required:"请输入课程价格",
+            number:"请输入正确的数字"
+        },
+        duration:{
+            required:"请输入学习时长",
+            digits:"请输入正确的数字"
         },
         introduce:{
             required:"请输入课程简介"

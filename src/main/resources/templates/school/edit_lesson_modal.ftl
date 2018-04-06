@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="control-label">学习周期:</label>
-                    <input type="text" class="form-control" id="duration" name="duration" value="${lesson.duration!''}">
+                    <input type="text" class="form-control" id="duration" name="duration" value="${lesson.duration!''}" placeholder="学习时长,以/天为单位">
                 </div>
                 <div class="form-group">
                     <label for="introduce" class="control-label">课程简介:</label>
@@ -59,18 +59,29 @@
                     <label for="" class="control-label">所属类目:</label>
                     <div class="btn-group" role="group" aria-label="">
                         <#list categoryList as category>
-                            <input type="radio" name="categoryId" id="categoryId" value="${category.id}"> ${category.name}
+                            <#if (lesson.category??) && (lesson.category.id == category.id)>
+                                <input type="radio" name="categoryId" id="categoryId" value="${category.id}" checked> ${category.name}
+                            <#else>
+                                <input type="radio" name="categoryId" id="categoryId" value="${category.id}"> ${category.name}
+                            </#if>
                         </#list>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="introduce" class="control-label">任课老师:</label>
                     <div class="btn-group" role="group" aria-label="">
-                        <input type="hidden" name="teacherIds" id="teacherIds"/>
+                        <input type="hidden" name="teacherIds" id="teacherIds" value="${teacherIds}"/>
                         <#list teacherList as teacher>
-                            <a href="javascript:void(0);" class="teacher_select" data-teacher="${teacher.id}">
-                                <img class="unchecked_img" src="${teacher.imageUrl}"/>
-                            </a>
+                            <#if (teacherIdList??) && (teacherIdList?seq_contains(teacher.id))>
+                                <a href="javascript:void(0);" class="teacher_select" data-teacher="${teacher.id}">
+                                    <img class="checked_img" src="${teacher.imageUrl}"/>
+                                </a>
+                            <#else>
+                                <a href="javascript:void(0);" class="teacher_select" data-teacher="${teacher.id}">
+                                    <img class="unchecked_img" src="${teacher.imageUrl}"/>
+                                </a>
+                            </#if>
+
                         </#list>
                     </div>
                 </div>

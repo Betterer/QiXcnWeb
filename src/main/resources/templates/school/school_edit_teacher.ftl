@@ -64,6 +64,10 @@
         <button type="button" class="btn btn-primary teacher_edit_btn" data-teacher="0" data-school="${schoolId}">
             点击添加新教师
         </button>
+
+        <button type="button" class="btn btn-danger edit_back" data-lesson="0" data-school="${schoolId}">
+            返回
+        </button>
     </div>
 </div>
 <!-- //添加教师信息-->
