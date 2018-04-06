@@ -22,6 +22,10 @@
                 <script src="${base}/js/common/jquery-1.11.1.min.js"></script>
                 <script src="${base}/js/common/bootstrap.min.js"></script>
                 <script src="${base}/js/common/menuAndNavbar.js"></script>
+                <!-- 分页插件 -->
+                <link href="${base}/css/jquery.bs_pagination.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="${base}/js/common/en.js"></script>
+                <script type="text/javascript" src="${base}/js/common/jquery.bs_pagination.js"></script>
                 <#nested>
             </head>
         </#macro>
@@ -41,7 +45,6 @@
                         scrollSpeed: 1200,
                         easingType: 'linear'
                     };
-
 
                     $().UItoTop({ easingType: 'easeOutQuart' });
 
@@ -96,7 +99,7 @@
 
 
         <!--菜单栏 首页-->
-        <#macro menu>
+        <#macro menu active="">
             <nav class="navbar navbar-default">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -111,8 +114,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav cl-effect-14">
-                        <li><a href="${base}/index">首页</a></li>
-                        <li><a href="${base}/school/list">学校列表</a></li>
+                        <li><a href="${base}/index" class="${(active=="index")?string('active','')}">首页</a></li>
+                        <li><a href="${base}/school/list" class="${(active=="list")?string('active','')}">学校列表</a></li>
                         <li><a href="features.html">机构列表(地图)</a></li>
                         <li><a href="portfolio.html">关于我们</a></li>
                         <li><a href="codes.html">联系我们</a></li>
@@ -197,6 +200,26 @@
             </nav>
             <!-- nav -->
         </footer>
+        </#macro>
+
+        <!--分页-->
+        <#macro pageing formId="" currentPageInputId="" currentPage="1" rowsPerPage="10" maxRowsPerPage="100" totalPages="100" totalRows="0">
+        <div class="container" style="margin-top: 100px;">
+            <div class="banner-bottom-grids">
+                <div class="col-md-5">
+                    <input type="hidden" id="formId" value="${formId}">
+                    <input type="hidden" id="currentPageInputId" value="${currentPageInputId}">
+                    <input type="hidden" id="currentPage" value="${currentPage}">
+                    <input type="hidden" id="rowsPerPage" value="${rowsPerPage}">
+                    <input type="hidden" id="maxRowsPerPage" value="${maxRowsPerPage}">
+                    <input type="hidden" id="totalPages" value="${totalPages}">
+                    <input type="hidden" id="totalRows" value="${totalRows}">
+                </div>
+                <div class="col-md-4 text-center" id="page_div"></div>
+                <div class="col-md-3"></div>
+            </div>
+            <script type="text/javascript" src="${base}/js/common/page.js"></script>
+        </div>
         </#macro>
 
 </#compress>

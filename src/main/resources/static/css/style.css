@@ -2905,3 +2905,68 @@ ul.wmuSliderPagination {
 	border-radius:100px;
 	border: 4px solid #32CD32;
 }
+.search_div input[type="text"]{
+	outline: none;
+	padding: 12px 45px 12px 10px;
+	font-size: 14px;
+	color: #9d9d9d;
+	background: none;
+	border: 1px solid #ccc;
+	float: right;
+	width: 75%;
+}
+.search_div i{
+	font-size: 1em;
+	color: #9d9d9d;
+	top: -1.8em;
+	right: 1em;
+	cursor: pointer;
+	float: right;
+}
+.search_div button{
+	outline: none;
+	padding: 12px 45px 12px 10px;
+	font-size: 14px;
+	color: #ccc;
+	background: none;
+	border: 1px solid #ccc;
+	float: left;
+	width: 25%;
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border-radius: 0px;
+}
+.search_dropdown_menu{
+	position: absolute;
+	top: 70%;
+	left:15px;
+	z-index: 1000;
+	display: none;
+	float: left;
+	max-width: 100px;
+	padding: 5px 0;
+	margin: 2px 0 0;
+	font-size: 14px;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 0px;
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}

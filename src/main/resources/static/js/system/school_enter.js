@@ -8,15 +8,17 @@
  * @type {boolean}
  */
 Dropzone.autoDiscover = false;
-var myDropzone = new Dropzone("#myDropzone", {
+
+//学校图片(logo)上传
+var myDropzone = new Dropzone("#schoolImage", {
     url: "/school/upload_images",
     addRemoveLinks: true,
     method: 'post',
-    maxFiles:10,//一次性上传的文件数量上限
-    maxFilesize: 20, //MB
+    maxFiles:1,//一次性上传的文件数量上限
+    maxFilesize: 2, //MB
     acceptedFiles: ".jpg,.gif,.png", //上传的类型
     parallelUploads: 3,
-    dictMaxFilesExceeded: "您最多只能上传10个文件！",
+    dictMaxFilesExceeded: "您最多只能上传1个文件！",
     dictResponseError: '文件上传失败!',
     dictInvalidFileType: "你不能上传该类型文件,文件类型只能是*.jpg,*.gif,*.png。",
     dictFallbackMessage:"浏览器不受支持",
@@ -28,12 +30,7 @@ var myDropzone = new Dropzone("#myDropzone", {
         //上传图片如果失败,显示"X"号,如果成功,将文件名存到隐藏input中
         if (response.status == 200) {
             //将上传成功的文件名存到隐藏的<input name="image" id="image">中,方便表单上传
-            var value = $("#image").val();
-            if(value=='' || value==null){
-                $("#image").val(response.fileName);
-            }else{
-                $("#image").val(value+","+response.fileName);
-            }
+            $("#image").val(response.fileName);
             //将dropzone中图片的原名替换
             $(file.previewTemplate).children('.dz-details').children('.dz-filename').children('span').text(response.fileName);
         } else {
@@ -64,14 +61,62 @@ var myDropzone = new Dropzone("#myDropzone", {
     }
 });
 
-/**
- * dropzone图片回显
- */
-// var mockFile = { name: "123.jpg", accepted:true };
-// myDropzone.emit("addedfile", mockFile);
-// myDropzone.emit("thumbnail", mockFile, "http://edms.kitesky.com/upload/image/20170422/52edf3c2aabf171315d968d9af814d0c.jpg");
-// myDropzone.emit("complete", mockFile);
-
+//学校环境图片上传
+var myDropzone1 = new Dropzone("#environmentImage", {
+    url: "/school/upload_images",
+    addRemoveLinks: true,
+    method: 'post',
+    maxFiles:10,//一次性上传的文件数量上限
+    maxFilesize: 20, //MB
+    acceptedFiles: ".jpg,.gif,.png", //上传的类型
+    parallelUploads: 3,
+    dictMaxFilesExceeded: "您最多只能上传10个文件！",
+    dictResponseError: '文件上传失败!',
+    dictInvalidFileType: "你不能上传该类型文件,文件类型只能是*.jpg,*.gif,*.png。",
+    dictFallbackMessage:"浏览器不受支持",
+    dictFileTooBig:"文件过大上传文件最大支持.",
+    sending: function(file, xhr, formData) {
+        formData.append("filesize", file.size);
+    },
+    success: function (file, response, e) {
+        //上传图片如果失败,显示"X"号,如果成功,将文件名存到隐藏input中
+        if (response.status == 200) {
+            //将上传成功的文件名存到隐藏的<input name="image" id="image">中,方便表单上传
+            var value = $("#environment").val();
+            if(value=='' || value==null){
+                $("#environment").val(response.fileName);
+            }else{
+                $("#environment").val(value+","+response.fileName);
+            }
+            //将dropzone中图片的原名替换
+            $(file.previewTemplate).children('.dz-details').children('.dz-filename').children('span').text(response.fileName);
+        } else {
+            $(file.previewTemplate).children('.dz-error-mark').css('opacity', '1')
+        }
+    },
+    removedfile:function(file){
+        //将图片预览删除
+        $(file.previewTemplate).remove();
+        //获得图片名称(存到OSS服务器中的新名称)
+        var imageName = $(file.previewTemplate).children('.dz-details').children('.dz-filename').children('span').text();
+        //将图片从隐藏input删除
+        $("#environment").val($("#environment").val().replace(","+imageName,''));
+        //todo:将图片从OSS服务器中删除
+    },
+    init:function(){
+        //图片回显
+        var myDropzone = this;
+        //获取已存的图片
+        $(".environmentImageUrl").each(function () {
+            var fileName = $(this).attr("data");
+            var path = $(this).val();
+            var mockFile = { name: fileName, accepted:true };
+            myDropzone.emit("addedfile", mockFile);
+            myDropzone.emit("thumbnail", mockFile, path);
+            myDropzone.emit("complete", mockFile);
+        });
+    }
+});
 
 /**
  * 自定义验证:网址格式验证

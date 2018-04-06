@@ -9,10 +9,21 @@ import com.qixcnweb.qixian.utils.FileUploadUtils;
 import com.qixcnweb.qixian.utils.ImageUtils;
 import com.qixcnweb.qixian.utils.JsonUtils;
 import org.apache.solr.common.util.Hash;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +49,29 @@ public class SchoolService {
 
     @Resource
     private SchoolDao schoolDao;
+
+
+    /**
+     * 分页查询school对象
+     * @return
+     * @param searchBy      //根据哪个字段查询
+     * @param currentPage   //当前页数
+     * @param condition     //查询条件
+     */
+    public Page<School> findSchoolByPage(String searchBy, Integer currentPage, String condition){
+        Pageable pageable = new PageRequest(currentPage, 10, Sort.Direction.ASC, "id");
+        Page<School> page = null;
+        if(searchBy.equals("name") && (condition!=null && !"".equals(condition))){
+            page = schoolDao.findSchoolByNameContaining(condition,pageable);
+        }else if(searchBy.equals("telephone") && (condition!=null && !"".equals(condition))){
+            page = schoolDao.findSchoolByTelephoneContaining(condition,pageable);
+        }else if(searchBy.equals("email") && (condition!=null && !"".equals(condition))){
+            page = schoolDao.findSchoolByEmailContaining(condition, pageable);
+        }else{
+            page = schoolDao.findAll(pageable);
+        }
+        return page;
+    }
 
     /**
      * 上传学校图片到OSS服务器

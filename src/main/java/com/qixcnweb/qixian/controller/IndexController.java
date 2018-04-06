@@ -143,15 +143,25 @@ public class IndexController {
         //根据当前登录人ID获取学校信息,查看当前登录人是否有学校入驻的信息
         School school = schoolService.findSchoolByUserId(user.getId());
         if(school!=null){
-            //获取学校介绍图片的访问地址
-            String[] schoolImages = school.getImage().split(",");
+            //获取学校图片(LOGO)的访问地址
             Map<String,String> schoolImageMap = new HashedMap();
-            for(String schoolImage : schoolImages){
-                if(schoolImage!=null && !"".equals(schoolImage)){
-                    schoolImageMap.put(schoolImage,fileUploadUtils.getFileUrl(schoolImage, 1000 * 60 * 60 * 1,Constant.OSS_STYLE_DROPZONE));
-                }
-            }
             school.setSchoolImageUrlMap(schoolImageMap);
+            if(school.getImage()!=null && !"".equals(school.getImage())){
+                schoolImageMap.put(school.getImage(),fileUploadUtils.getFileUrl(school.getImage(), 1000 * 60 * 60 * 1,Constant.OSS_STYLE_DROPZONE));
+                school.setSchoolImageUrlMap(schoolImageMap);
+            }
+
+            //获取学校环境图片的访问地址
+            Map<String,String> environmentImageMap = new HashedMap();
+            if(school.getEnvironment()!=null && !"".equals(school.getEnvironment())){
+                String[] environmentImages = school.getEnvironment().split(",");
+                for(String environmentImage : environmentImages){
+                    if(environmentImage!=null && !"".equals(environmentImage)){
+                        environmentImageMap.put(environmentImage,fileUploadUtils.getFileUrl(environmentImage, 1000 * 60 * 60 * 1,Constant.OSS_STYLE_DROPZONE));
+                    }
+                }
+                school.setEnvironmentImageUrlMap(environmentImageMap);
+            }
 
             //获取学校法人身份证访问地址
             String identity = user.getIdentity();

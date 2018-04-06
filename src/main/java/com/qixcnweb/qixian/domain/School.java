@@ -30,6 +30,9 @@ public class School implements Serializable {
     @Column( name = "image")
     private String image;
 
+    @Column(name = "environment")
+    private String environment;             //环境图片
+
     @Column( name = "address")
     private String address;
 
@@ -66,6 +69,9 @@ public class School implements Serializable {
     @Column(name = "status")
     private Integer status;
 
+    @Transient
+    private String imageUrl;
+
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, mappedBy = "school")
     private List<Teacher> teacherList;      //关联老师
 
@@ -82,7 +88,8 @@ public class School implements Serializable {
     @Transient
     private Map<String,String> schoolImageUrlMap;       //学校介绍图片访问url
 
-
+    @Transient
+    private Map<String,String> environmentImageUrlMap;       //学校介绍图片访问url
 
 
 
@@ -253,6 +260,30 @@ public class School implements Serializable {
 
     public void setSchoolImageUrlMap(Map<String, String> schoolImageUrlMap) {
         this.schoolImageUrlMap = schoolImageUrlMap;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public Map<String, String> getEnvironmentImageUrlMap() {
+        return environmentImageUrlMap;
+    }
+
+    public void setEnvironmentImageUrlMap(Map<String, String> environmentImageUrlMap) {
+        this.environmentImageUrlMap = environmentImageUrlMap;
     }
 
     @Override

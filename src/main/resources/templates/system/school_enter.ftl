@@ -23,11 +23,11 @@
             </article>
         </div>
         <div class="clearfix"></div>
+
         <!-- 学校图片上传 -->
         <div class="contat-from-wrapper" id="crop-avatar">
-
             <section>
-                <form action="${template.base}/school/upload_images" class="dropzone dz-clickable" id="myDropzone" enctype="multipart/form-data">
+                <form action="${template.base}/school/upload_images" class="dropzone dz-clickable" id="schoolImage" enctype="multipart/form-data">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <#if school.schoolImageUrlMap??>
                         <#list school.schoolImageUrlMap?keys as key>
@@ -36,6 +36,27 @@
                     <#else>
                         <div class="dz-message needsclick">
                             点击此处上传学校图片.<br>
+                            <span class="note needsclick">(最多上传1张图片,且每张图片大小不能超过2M)</span>
+                        </div>
+                    </#if>
+                </form>
+            </section>
+        </div>
+
+
+
+        <!-- 学校环境图片上传 -->
+        <div class="contat-from-wrapper" id="crop-avatar2">
+            <section>
+                <form action="${template.base}/school/upload_images" class="dropzone dz-clickable" id="environmentImage" enctype="multipart/form-data">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <#if school.environmentImageUrlMap??>
+                        <#list school.environmentImageUrlMap?keys as key>
+                            <input type="hidden" class="environmentImageUrl" data="${key}" value="${school.environmentImageUrlMap[key]}"/>
+                        </#list>
+                    <#else>
+                        <div class="dz-message needsclick">
+                            点击此处上传学校环境图片.<br>
                             <span class="note needsclick">(最多上传10张图片,且每张图片大小不能超过2M)</span>
                         </div>
                     </#if>
@@ -49,6 +70,8 @@
             <form action="${template.base}/school/enter" name="school_enter" id="school_enter" enctype="multipart/form-data" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="id" value="${school.id!''}"/>
+                <input  name="image" id="image" type="hidden" value="${school.image!''}" />
+                <input  name="environment" id="environment" type="hidden" value="${school.environment!''}" />
                 <div class="row sys_row">
                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                         <input  name="name" id="name" type="text" placeholder="学校名称" value="${school.name!''}">
@@ -81,7 +104,6 @@
                         <input  name="webSite" id="webSite" type="text" placeholder="学校网站(例:http://www.baidu.com)" value="${school.webSite!''}">
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
-                        <input  name="image" id="image" type="hidden" value="${school.image!''}" />
                     </div>
                 </div>
                 <div class="clearfix"></div>

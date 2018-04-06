@@ -5,7 +5,9 @@ import com.qixcnweb.qixian.domain.*;
 import com.qixcnweb.qixian.remote.RabbitFeignClient;
 import com.qixcnweb.qixian.service.*;
 import com.qixcnweb.qixian.utils.FileUploadUtils;
+import com.sun.javafx.beans.annotations.Default;
 import org.apache.commons.collections.map.HashedMap;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -54,7 +56,24 @@ public class SchoolController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String shcoolList(){
+    public String schoolList(@RequestParam(defaultValue = "name") String searchBy,
+                             @RequestParam(defaultValue = "1") String currentPage,
+                             String condition,
+                             Map<String,Object> resultMap){
+        //根据条件分页查询
+        Page<School> schoolByPage = schoolService.findSchoolByPage(searchBy, Integer.parseInt(currentPage)-1, condition);
+        //将学校图片装换成能访问的OSS URL
+        List<School> schoolList = schoolByPage.getContent();
+        for(School school:schoolList){
+            if(school.getImage()!=null && !"".equals(school.getImage())){
+                school.setImageUrl(fileUploadUtils.getFileUrl(school.getImage(),1000*60*60*3,Constant.OSS_STYLE_SCHOOL_IMG_LIST));
+            }
+        }
+        resultMap.put("page",schoolByPage);
+        resultMap.put("searchBy",searchBy);
+        resultMap.put("condition",condition);
+        resultMap.put("schoolList",schoolList);
+
         return "school/list";
     }
 
@@ -127,9 +146,6 @@ public class SchoolController {
             request.getSession().setAttribute("user",sessionUser);
             userService.saveUser(user);
 
-            //调用rabbitmq的远程服务发送消息到 "qixian.mail"队列中,mail服务收到消息之后会发送邮件
-            rabbitFeignClient.sendMessageWithoutExchange("qixian.mail",user);
-
             return "redirect:/index";
         }else{
             return "errorpage/500";
@@ -150,21 +166,23 @@ public class SchoolController {
         //Step1:
         //获取学校图片,并且把图片换成能访问的OSS url
         String schoolMainImg = "";
-        Map<String,String> schoolImgMap = new HashedMap();
+        Map<String,String> environmenImageMap = new HashedMap();
         if(school.getImage()!=null && !"".equals(school.getImage())){
-            String image = school.getImage();
-            List<String> imageList = Arrays.asList(image.split(","));
+            schoolMainImg = fileUploadUtils.getFileUrl(school.getImage(),1000*60*60*3,Constant.OSS_STYLE_SCHOOL_MAIN);
+        }
+
+        //Step2:获取学校环境图片,并且把课程图片转换成可能访问的url
+        if(school.getEnvironment()!=null && !"".equals(school.getEnvironment())){
+            String environmenImage = school.getEnvironment();
+            List<String> imageList = Arrays.asList(environmenImage.split(","));
             //第一张图片设置为主图,其他的图片为页面图片列表的图片
             for(String imageName : imageList){
-                if(imageList.get(0).equals(imageName)){
-                    schoolMainImg = fileUploadUtils.getFileUrl(imageName,1000*60*60*3,Constant.OSS_STYLE_SCHOOL_MAIN);
-                }else{
-                    schoolImgMap.put(imageName,fileUploadUtils.getFileUrl(imageName,1000*60*60*3));
-                }
+                environmenImageMap.put(imageName,fileUploadUtils.getFileUrl(imageName,1000*60*60*3));
             }
         }
 
-        //Step2:获取相关课程,并且把课程图片转换成可能访问的url
+
+        //Step3:获取相关课程,并且把课程图片转换成可能访问的url
         //用于存放状态正常的课程
         List<Lesson> normalLessonList = new ArrayList<>();
         //将课程图片转换成能访问的OSS url
@@ -180,7 +198,7 @@ public class SchoolController {
 
 
 
-        //Step3: 获取推荐的教师,并且把教师图片转换成能访问的URL
+        //Step4: 获取推荐的教师,并且把教师图片转换成能访问的URL
         //用于存储推荐教师
         List<Teacher> recommentTeacherList = new ArrayList<>();
         //将教师图片转换成能能访问的OSS url
@@ -198,7 +216,7 @@ public class SchoolController {
         resultMap.put("user",user);
         resultMap.put("school",school);
         resultMap.put("schoolMainImg",schoolMainImg);
-        resultMap.put("schoolImgMap",schoolImgMap);
+        resultMap.put("environmenImageMap",environmenImageMap);
         return "school/school";
     }
 

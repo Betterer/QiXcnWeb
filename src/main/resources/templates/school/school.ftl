@@ -78,7 +78,7 @@
 <!-- //学校简介 -->
 
 <!-- 学校图片 -->
-<#if (schoolImgMap??) && (schoolImgMap?size > 0) >
+<#if (environmenImageMap??) && (environmenImageMap?size > 0) >
 <div class="blog" id="environment">
     <div class="container">
         <h3>校园环境</h3>
@@ -86,11 +86,11 @@
             <div class="sap_tabs">
                 <div class="tab-1 resp-tab-content">
                     <div class="main">
-                        <#list schoolImgMap?keys as key>
+                        <#list environmenImageMap?keys as key>
                             <div class="view effect">
                                 <div class="img-top">
-                                    <a href="${schoolImgMap[key]}" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                                        <img src="${schoolImgMap[key]}" class="img-responsive" alt="" />
+                                    <a href="${environmenImageMap[key]}" rel="title" class="b-link-stripe b-animate-go  thickbox">
+                                        <img src="${environmenImageMap[key]}" class="img-responsive" alt="" />
                                         <div class="mask"></div>
                                         <div class="content">
                                             <span class="info" title="Full Image"> </span>

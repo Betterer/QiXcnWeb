@@ -25,7 +25,7 @@
 			<#else>
 				<@template.unLoginUser/>
 			</#if>
-			<@template.menu/>
+			<@template.menu active="index"/>
 			<@template.banner/>
 		</div>
 	</div>
