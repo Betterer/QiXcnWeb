@@ -59,7 +59,7 @@ public class SchoolService {
      * @param condition     //查询条件
      */
     public Page<School> findSchoolByPage(String searchBy, Integer currentPage, String condition){
-        Pageable pageable = new PageRequest(currentPage, 10, Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest(currentPage, 9, Sort.Direction.ASC, "id");
         Page<School> page = null;
         if(searchBy.equals("name") && (condition!=null && !"".equals(condition))){
             page = schoolDao.findSchoolByNameContaining(condition,pageable);

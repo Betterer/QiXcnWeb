@@ -5,7 +5,6 @@ import com.qixcnweb.qixian.domain.*;
 import com.qixcnweb.qixian.remote.RabbitFeignClient;
 import com.qixcnweb.qixian.service.*;
 import com.qixcnweb.qixian.utils.FileUploadUtils;
-import com.sun.javafx.beans.annotations.Default;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
