@@ -45,6 +45,10 @@ public class IndexController {
     private TestFeignClient testFeignClient;        //测试eureka远程调用
 
     /**
+     * test
+     */
+
+    /**
      * 跳转到index页面
      * @return
      */
