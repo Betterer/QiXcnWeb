@@ -79,12 +79,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(tokenRepository());
 
         //***************************************  CSRF 安全令牌(拦截所有POST请求) ****************************************//
-        http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository()).requireCsrfProtectionMatcher(new RequestMatcher() {
-            @Override
-            public boolean matches(HttpServletRequest httpServletRequest) {
-                return httpServletRequest.getMethod().equals("POST");
-            }
-        });
+//        http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository()).requireCsrfProtectionMatcher(new RequestMatcher() {
+//            @Override
+//            public boolean matches(HttpServletRequest httpServletRequest) {
+//                return httpServletRequest.getMethod().equals("POST");
+//            }
+//        });
+
+        http.csrf().disable();
     }
 
     @Autowired

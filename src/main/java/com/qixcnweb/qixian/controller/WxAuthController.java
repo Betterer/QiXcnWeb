@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.qixcnweb.qixian.core.JacksonUtil;
 import org.springframework.format.datetime.standard.DateTimeContext;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -41,7 +40,8 @@ public class WxAuthController {
      *  }
      *   失败则 { errno: XXX, errmsg: XXX }
      */
-    @PostMapping(value="/wxlogin",produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value="/wxlogin",method = RequestMethod.POST)
+    @ResponseBody
     public Map login(@RequestBody String body) {
 
         String username = JacksonUtil.parseString(body, "username");
